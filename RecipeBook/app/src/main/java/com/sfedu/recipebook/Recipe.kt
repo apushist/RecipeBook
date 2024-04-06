@@ -1,10 +1,11 @@
 package com.sfedu.recipebook
 
+import androidx.annotation.DrawableRes
 import kotlin.text.StringBuilder
 
 data class Recipe(
     val id: Int,
-    val imageId: Int,
+    @DrawableRes val imageId: Int,
     val title: String,
     private val ingredients: String,
     private val recipeSteps: String,
