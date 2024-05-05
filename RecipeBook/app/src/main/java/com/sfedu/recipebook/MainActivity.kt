@@ -1,46 +1,29 @@
 package com.sfedu.recipebook
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.sfedu.recipebook.ui.theme.RecipeBookTheme
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity(), RecipeListFragment.Companion.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            RecipeBookTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
-        }
+        setContentView(R.layout.activity_main)
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    override fun itemClicked(id: Int) {
+        val fragmentContainer = findViewById<View>(R.id.fragment_container)
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RecipeBookTheme {
-        Greeting("Android")
+        if (fragmentContainer != null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, RecipeDetailFragment.newInstance(id))
+            transaction.addToBackStack(null)
+            transaction.setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.commit()
+        } else {
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.RECIPE_ID, id)
+            startActivity(intent)
+        }
     }
 }

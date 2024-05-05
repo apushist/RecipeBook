@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">RecipeBook</string>
+    <string name="app_name">Recipe Book</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_content_desc">share</string>
+    <string name="recipe_photo">Recipe photo</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="recipe_image">Recipe image</string>
+    <string name="steps">Steps</string>
+    <string name="cooking_time">Cooking time:</string>
+    <string name="default_serving_size">Default serving size:</string>
+    <string name="difficulty">Difficulty:</string>
+    <string name="serving_size">Serving Size:</string>
+    <string name="change_serving_size">Change serving size</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="_0">0</string>
+    <string name="placeholder">Placeholder</string>
 </resources>
