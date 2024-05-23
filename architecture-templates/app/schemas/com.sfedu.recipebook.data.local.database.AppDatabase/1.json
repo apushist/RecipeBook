@@ -2,15 +2,51 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fb2af8bab1eb7f5ad6bc24bf582abfb3",
+    "identityHash": "9d466b8c902e0c2010801ddc6d49c9c6",
     "entities": [
       {
         "tableName": "Recipe",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `imageId` INTEGER NOT NULL, `difficulty` TEXT NOT NULL, `cookingTime` INTEGER NOT NULL, `servingSize` INTEGER NOT NULL, `ingredients` TEXT NOT NULL, `recipeSteps` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageId",
+            "columnName": "imageId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "difficulty",
+            "columnName": "difficulty",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cookingTime",
+            "columnName": "cookingTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "servingSize",
+            "columnName": "servingSize",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ingredients",
+            "columnName": "ingredients",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recipeSteps",
+            "columnName": "recipeSteps",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -34,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb2af8bab1eb7f5ad6bc24bf582abfb3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d466b8c902e0c2010801ddc6d49c9c6')"
     ]
   }
 }

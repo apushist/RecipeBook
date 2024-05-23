@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import com.sfedu.recipebook.data.RecipeRepository
+import com.sfedu.recipebook.data.local.database.Recipe
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Error
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Loading
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Success
@@ -37,19 +38,38 @@ class RecipeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uiState: StateFlow<RecipeUiState> = recipeRepository
-        .recipes.map<List<String>, RecipeUiState>(::Success)
+        .recipes.map<List<Recipe>, RecipeUiState>(::Success)
         .catch { emit(Error(it)) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Loading)
 
-    fun addRecipe(name: String) {
+    fun addRecipe(
+        name: String,
+        //imageId: Int,
+        difficulty: String,
+        cookingTime: Int,
+        servingSize: Int,
+        ingredients: String,
+        recipeSteps: String
+    ) {
         viewModelScope.launch {
-            recipeRepository.add(name)
+            recipeRepository.add(name,0,difficulty,cookingTime,servingSize,ingredients,recipeSteps)
+            TODO("Add imageId")
         }
     }
+
+    fun getRecipeById(recipeId: Int): Recipe?{
+        var res: Recipe? = null
+        viewModelScope.launch {
+            res = recipeRepository.getRecipeById(recipeId)
+        }
+        return res
+    }
+
+
 }
 
 sealed interface RecipeUiState {
     object Loading : RecipeUiState
     data class Error(val throwable: Throwable) : RecipeUiState
-    data class Success(val data: List<String>) : RecipeUiState
+    data class Success(val data: List<Recipe>) : RecipeUiState
 }

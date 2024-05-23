@@ -17,15 +17,24 @@
 package com.sfedu.recipebook.data.local.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Entity
 data class Recipe(
-    val name: String
+    val name: String,
+    val imageId: Int,
+    val difficulty: String,
+    val cookingTime: Int,
+    val servingSize: Int,
+    val ingredients: String,
+    val recipeSteps: String,
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
@@ -36,6 +45,25 @@ interface RecipeDao {
     @Query("SELECT * FROM recipe ORDER BY uid DESC LIMIT 10")
     fun getRecipes(): Flow<List<Recipe>>
 
+    @Query("SELECT * FROM recipe ORDER BY uid DESC ")
+    fun getAllRecipes(): Flow<List<Recipe>>
+
+    @Transaction
+    @Query("SELECT * FROM recipe WHERE uid = :recipeId")
+    fun getRecipeById(recipeId: Int):  Flow<List<Recipe>>
+
+    @Transaction
+    @Query("SELECT * FROM recipe WHERE name = :name")
+    fun getRecipesByName(name: String):  Flow<List<Recipe>>
+
     @Insert
     suspend fun insertRecipe(item: Recipe)
+
+    /*
+    @Delete(entity = Recipe::class)
+    fun deleteRecipeById(uid: Int)
+
+    @Query("DELETE FROM recipe")
+    fun deleteAll()
+    * */
 }

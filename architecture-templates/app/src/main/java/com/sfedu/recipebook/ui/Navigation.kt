@@ -23,14 +23,36 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sfedu.recipebook.ui.recipe.RecipeAddScreen
 import com.sfedu.recipebook.ui.recipe.RecipeScreen
+import com.sfedu.recipebook.ui.recipe.RecipeView
+
+var currentRecipeId = 0
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "main") {
-        composable("main") { RecipeScreen(modifier = Modifier.padding(16.dp)) }
+        composable("main") {
+            RecipeScreen(
+                onNavigateToAddScreen = { navController.navigate("addScreen") },
+                //onNavigateToRecipeView = { navController.navigate("recipeView") },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        composable("addScreen"){
+            RecipeAddScreen(
+                onNavigateToMain = { navController.navigate("main") },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        /*composable("recipeView"){
+            RecipeView(
+                onNavigateToMain = { navController.navigate("main") },
+                modifier = Modifier.padding(16.dp)
+            )
+        }*/
         // TODO: Add more destinations
     }
 }

@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import com.sfedu.recipebook.data.RecipeRepository
 import com.sfedu.recipebook.data.DefaultRecipeRepository
+import com.sfedu.recipebook.data.local.database.Recipe
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,11 +40,31 @@ interface DataModule {
 }
 
 class FakeRecipeRepository @Inject constructor() : RecipeRepository {
-    override val recipes: Flow<List<String>> = flowOf(fakeRecipes)
+    override val recipes: Flow<List<Recipe>> = flowOf(listOf())
 
-    override suspend fun add(name: String) {
+    override suspend fun add(
+        name: String,
+        imageId: Int,
+        difficulty: String,
+        cookingTime: Int,
+        servingSize: Int,
+        ingredients: String,
+        recipeSteps: String
+        ) {
         throw NotImplementedError()
     }
+
+    override suspend fun getRecipeById(recipeId: Int): Recipe {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getRecipesByName(name: String): Flow<List<Recipe>> {
+        TODO("Not yet implemented")
+    }
+
+   /* override suspend fun deleteRecipeById(recipeId: Int) {
+        TODO("Not yet implemented")
+    }*/
 }
 
 val fakeRecipes = listOf("One", "Two", "Three")

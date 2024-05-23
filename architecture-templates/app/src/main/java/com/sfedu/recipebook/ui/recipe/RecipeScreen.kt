@@ -16,69 +16,101 @@
 
 package com.sfedu.recipebook.ui.recipe
 
-import com.sfedu.recipebook.ui.theme.MyApplicationTheme
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.lazy.items
+import com.sfedu.recipebook.data.local.database.Recipe
+import com.sfedu.recipebook.ui.currentRecipeId
+
+
 
 @Composable
-fun RecipeScreen(modifier: Modifier = Modifier, viewModel: RecipeViewModel = hiltViewModel()) {
+fun RecipeScreen(
+    onNavigateToAddScreen: () -> Unit,
+    //onNavigateToRecipeView: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: RecipeViewModel = hiltViewModel()
+) {
     val items by viewModel.uiState.collectAsStateWithLifecycle()
     if (items is RecipeUiState.Success) {
         RecipeScreen(
-            items = (items as RecipeUiState.Success).data,
-            onSave = viewModel::addRecipe,
+            onNavigateToAddScreen = onNavigateToAddScreen,
+            //onNavigateToRecipeView = onNavigateToRecipeView,
+            recipes = (items as RecipeUiState.Success).data,
             modifier = modifier
         )
     }
 }
 
+
+
 @Composable
 internal fun RecipeScreen(
-    items: List<String>,
-    onSave: (name: String) -> Unit,
+    onNavigateToAddScreen: () -> Unit,
+    //onNavigateToRecipeView: () -> Unit,
+    recipes: List<Recipe>,
+   // onDelete:
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
-        var nameRecipe by remember { mutableStateOf("Compose") }
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            TextField(
-                value = nameRecipe,
-                onValueChange = { nameRecipe = it }
-            )
-
-            Button(modifier = Modifier.width(96.dp), onClick = { onSave(nameRecipe) }) {
-                Text("Save")
-            }
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 24.dp),
+        ){
+        Button(
+            modifier = Modifier.width(96.dp),
+            onClick = {
+            onNavigateToAddScreen()
+        }) {
+            Text("Add recipe")
         }
-        items.forEach {
-            Text("Saved item: $it")
+        /*Button(
+            modifier = Modifier.width(96.dp),
+            onClick = {
+                ()
+            }) {
+            Text("Add recipe")
+        }*/
+        LazyColumn {
+            items(recipes){
+                recipe -> RecipeCard(
+                    recipe = recipe,
+                    //onNavigateToRecipeView = onNavigateToRecipeView
+                    )
+            }
         }
     }
 }
 
+@Composable
+fun RecipeCard(
+    recipe: Recipe,
+    //onNavigateToRecipeView: () -> Unit,
+){
+    Button(onClick = {
+        //currentRecipeId = recipe.uid
+        //onNavigateToRecipeView()
+    }) {
+        Text(recipe.name +"\n"+ recipe.recipeSteps + "\n"+ recipe.ingredients )
+    }
+
+}
+
+
+
 // Previews
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
     MyApplicationTheme {
@@ -92,4 +124,4 @@ private fun PortraitPreview() {
     MyApplicationTheme {
         RecipeScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
-}
+}*/
