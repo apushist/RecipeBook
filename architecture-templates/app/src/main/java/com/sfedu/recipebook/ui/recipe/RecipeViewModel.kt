@@ -32,6 +32,13 @@ import com.sfedu.recipebook.ui.recipe.RecipeUiState.Loading
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Success
 import javax.inject.Inject
 
+
+var currentRecipe = Recipe("name",0,"difficulty",
+    10,1,"ingredient:0.0:measure;","recipeSteps")
+
+var viewableIngredients: List<Triple<String, Double,String>> = ingredientsStringToList(currentRecipe.ingredients)
+
+
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
@@ -78,6 +85,29 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+}
+
+fun ingredientsListToString(ingredientsList:List<Triple<String, Double,String>>):String{
+    val sb = StringBuilder()
+    for(component in ingredientsList){
+        sb.append("${component.first}:${component.second}:${component.third}").append(";")
+    }
+    return sb.toString()
+}
+
+fun ingredientsStringToList(ingredients: String):List<Triple<String, Double,String>>{
+    val ingredientsStr = ingredients.split(";")
+    val result: MutableList<Triple<String, Double,String>> = mutableListOf()
+    for(ing in ingredientsStr){
+        val ingredientComp = ing.split(":")
+        if(ingredientComp.size == 3)
+            result.add(Triple(ingredientComp[0],ingredientComp[1].toDouble(),ingredientComp[2]))
+    }
+    return result
+}
+
+fun ingredientTripleToString(ingredient:Triple<String, Double,String>): String{
+    return "${ingredient.first} ${ingredient.second} ${ingredient.third}"
 }
 
 sealed interface RecipeUiState {

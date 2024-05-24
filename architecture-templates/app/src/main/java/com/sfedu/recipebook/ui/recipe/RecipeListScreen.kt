@@ -16,7 +16,9 @@
 
 package com.sfedu.recipebook.ui.recipe
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -31,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.lazy.items
 import com.sfedu.recipebook.data.local.database.Recipe
-import com.sfedu.recipebook.ui.currentRecipe
+import com.sfedu.recipebook.ui.recipe.currentRecipe
 
 
 
@@ -68,18 +70,24 @@ internal fun RecipeListScreen(
         .fillMaxWidth()
         .padding(bottom = 24.dp),
         ){
-        Button(
-            modifier = Modifier.width(96.dp),
-            onClick = {
-            onNavigateToAddScreen()
-        }) {
-            Text("Add recipe")
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Button(
+                //modifier = Modifier.width(96.dp),
+                onClick = {
+                    onNavigateToAddScreen()
+                }) {
+                Text("Add recipe")
+            }
+            Button(
+                //modifier = Modifier.width(96.dp),
+                onClick = { onDelete() }) {
+                Text("Delete all recipe")
+            }
         }
-        Button(
-            modifier = Modifier.width(96.dp),
-            onClick = { onDelete() }) {
-            Text("Delete all recipe")
-        }
+
         LazyColumn {
             items(recipes){
                 recipe -> RecipeCard(
@@ -98,29 +106,10 @@ fun RecipeCard(
 ){
     Button(onClick = {
         currentRecipe = recipe
+        viewableIngredients = ingredientsStringToList(currentRecipe.ingredients)
         onNavigateToRecipeView()
     }) {
         Text(recipe.name +"\n"+ recipe.recipeSteps + "\n"+ recipe.ingredients )
     }
 
 }
-
-
-
-// Previews
-
-/*@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-    MyApplicationTheme {
-        RecipeScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
-    }
-}
-
-@Preview(showBackground = true, widthDp = 480)
-@Composable
-private fun PortraitPreview() {
-    MyApplicationTheme {
-        RecipeScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
-    }
-}*/
