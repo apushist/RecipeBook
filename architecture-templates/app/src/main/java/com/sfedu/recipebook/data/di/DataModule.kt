@@ -70,6 +70,10 @@ class FakeRecipeRepository @Inject constructor() : RecipeRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteRecipe(recipe: Recipe) {
+        TODO("Not yet implemented")
+    }
+
     /* override suspend fun deleteRecipeById(recipeId: Int) {
          TODO("Not yet implemented")
      }*/

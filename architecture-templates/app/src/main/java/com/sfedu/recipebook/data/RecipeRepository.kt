@@ -39,8 +39,9 @@ interface RecipeRepository {
     suspend fun getRecipeById(recipeId: Int):Recipe?
     suspend fun getRecipesByName(name: String):Flow<List<Recipe>>
     suspend fun deleteRecipeById(recipeId: Int)
-
     suspend fun deleteAll()
+
+    suspend fun deleteRecipe(recipe: Recipe)
 }
 
 class DefaultRecipeRepository @Inject constructor(
@@ -81,10 +82,14 @@ class DefaultRecipeRepository @Inject constructor(
     override suspend fun deleteRecipeById(recipeId: Int) {
         val recipe = getRecipeById(recipeId)
         if(recipe != null)
-            recipeDao.deleteRecipeById(recipe)
+            recipeDao.deleteRecipe(recipe)
     }
 
     override suspend fun deleteAll() {
         recipeDao.deleteAll()
+    }
+
+    override suspend fun deleteRecipe(recipe: Recipe) {
+        recipeDao.deleteRecipe(recipe)
     }
 }

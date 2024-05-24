@@ -23,12 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.sfedu.recipebook.data.local.database.Recipe
 import com.sfedu.recipebook.ui.recipe.RecipeAddScreen
 import com.sfedu.recipebook.ui.recipe.RecipeListScreen
 import com.sfedu.recipebook.ui.recipe.RecipeScreen
 
 
-var currentRecipeId = 0
+var currentRecipe = Recipe("name",0,"difficulty",
+    10,1,"ingredients","recipeSteps")
 
 @Composable
 fun MainNavigation() {

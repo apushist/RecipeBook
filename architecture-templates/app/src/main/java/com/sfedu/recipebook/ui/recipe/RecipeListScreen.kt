@@ -31,8 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.foundation.lazy.items
 import com.sfedu.recipebook.data.local.database.Recipe
-import com.sfedu.recipebook.ui.currentRecipeId
-import kotlin.reflect.KFunction
+import com.sfedu.recipebook.ui.currentRecipe
+
 
 
 @Composable
@@ -97,7 +97,7 @@ fun RecipeCard(
     onNavigateToRecipeView: () -> Unit,
 ){
     Button(onClick = {
-        currentRecipeId = recipe.uid
+        currentRecipe = recipe
         onNavigateToRecipeView()
     }) {
         Text(recipe.name +"\n"+ recipe.recipeSteps + "\n"+ recipe.ingredients )

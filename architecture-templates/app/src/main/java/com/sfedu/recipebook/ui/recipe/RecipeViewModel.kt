@@ -72,6 +72,12 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+    fun deleteRecipe(recipe: Recipe){
+        viewModelScope.launch {
+            recipeRepository.deleteRecipe(recipe)
+        }
+    }
+
 }
 
 sealed interface RecipeUiState {

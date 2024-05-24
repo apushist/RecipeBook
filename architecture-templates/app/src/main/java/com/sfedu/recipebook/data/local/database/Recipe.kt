@@ -60,7 +60,7 @@ interface RecipeDao {
     suspend fun insertRecipe(item: Recipe)
 
     @Delete(entity = Recipe::class)
-    suspend fun deleteRecipeById(recipe: Recipe)
+    suspend fun deleteRecipe(recipe: Recipe)
 
     @Query("DELETE FROM recipe")
     suspend fun deleteAll()

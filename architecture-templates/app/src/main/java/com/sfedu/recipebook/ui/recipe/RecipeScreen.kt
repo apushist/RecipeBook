@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sfedu.recipebook.ui.currentRecipeId
+import com.sfedu.recipebook.ui.currentRecipe
 
 
 @Composable
@@ -18,7 +18,7 @@ fun RecipeScreen(
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()
 ) {
-    val recipe = viewModel.getRecipeById(currentRecipeId)
+    val recipe = currentRecipe
     if(recipe != null) {
         LazyColumn {
             item{
@@ -37,6 +37,15 @@ fun RecipeScreen(
             }
             item{
                 Text(text = recipe.ingredients)
+            }
+
+            item{
+                Button(onClick = {
+                    viewModel.deleteRecipe(recipe)
+                    onNavigateToMain()
+                }) {
+                    Text(text = "Delete")
+                }
             }
         }
     }
