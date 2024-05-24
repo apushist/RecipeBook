@@ -50,7 +50,7 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * FROM recipe WHERE uid = :recipeId")
-    fun getRecipeById(recipeId: Int):  Flow<List<Recipe>>
+    fun getRecipeById(recipeId: Int):  Recipe?
 
     @Transaction
     @Query("SELECT * FROM recipe WHERE name = :name")
@@ -59,11 +59,10 @@ interface RecipeDao {
     @Insert
     suspend fun insertRecipe(item: Recipe)
 
-    /*
     @Delete(entity = Recipe::class)
-    fun deleteRecipeById(uid: Int)
+    suspend fun deleteRecipeById(recipe: Recipe)
 
     @Query("DELETE FROM recipe")
-    fun deleteAll()
-    * */
+    suspend fun deleteAll()
+
 }

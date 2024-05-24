@@ -53,7 +53,8 @@ class RecipeViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             recipeRepository.add(name,0,difficulty,cookingTime,servingSize,ingredients,recipeSteps)
-            TODO("Add imageId")
+           // TODO Add imageId
+
         }
     }
 
@@ -65,6 +66,11 @@ class RecipeViewModel @Inject constructor(
         return res
     }
 
+    fun deleteAll(){
+        viewModelScope.launch {
+            recipeRepository.deleteAll()
+        }
+    }
 
 }
 

@@ -62,9 +62,17 @@ class FakeRecipeRepository @Inject constructor() : RecipeRepository {
         TODO("Not yet implemented")
     }
 
-   /* override suspend fun deleteRecipeById(recipeId: Int) {
+    override suspend fun deleteRecipeById(recipeId: Int) {
         TODO("Not yet implemented")
-    }*/
+    }
+
+    override suspend fun deleteAll() {
+        TODO("Not yet implemented")
+    }
+
+    /* override suspend fun deleteRecipeById(recipeId: Int) {
+         TODO("Not yet implemented")
+     }*/
 }
 
 val fakeRecipes = listOf("One", "Two", "Three")

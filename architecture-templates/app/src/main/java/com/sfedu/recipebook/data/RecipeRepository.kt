@@ -36,11 +36,11 @@ interface RecipeRepository {
         recipeSteps: String
     )
 
-    suspend fun getRecipeById(recipeId: Int):Recipe
+    suspend fun getRecipeById(recipeId: Int):Recipe?
     suspend fun getRecipesByName(name: String):Flow<List<Recipe>>
-    /*suspend fun deleteRecipeById(recipeId: Int)
+    suspend fun deleteRecipeById(recipeId: Int)
 
-    suspend fun deleteAll()*/
+    suspend fun deleteAll()
 }
 
 class DefaultRecipeRepository @Inject constructor(
@@ -70,19 +70,21 @@ class DefaultRecipeRepository @Inject constructor(
         ))
     }
 
-    override suspend fun getRecipeById(recipeId: Int): Recipe {
-        return recipeDao.getRecipeById(recipeId).first().first()
+    override suspend fun getRecipeById(recipeId: Int): Recipe? {
+        return recipeDao.getRecipeById(recipeId)
     }
 
     override suspend fun getRecipesByName(name: String): Flow<List<Recipe>> {
         return recipeDao.getRecipesByName(name)
     }
 
-    /*override suspend fun deleteRecipeById(recipeId: Int) {
-        recipeDao.deleteRecipeById(recipeId)
+    override suspend fun deleteRecipeById(recipeId: Int) {
+        val recipe = getRecipeById(recipeId)
+        if(recipe != null)
+            recipeDao.deleteRecipeById(recipe)
     }
 
     override suspend fun deleteAll() {
         recipeDao.deleteAll()
-    }*/
+    }
 }
