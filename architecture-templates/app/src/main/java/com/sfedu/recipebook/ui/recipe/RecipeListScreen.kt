@@ -84,7 +84,7 @@ internal fun RecipeListScreen(
             Button(
                 //modifier = Modifier.width(96.dp),
                 onClick = { onDelete() }) {
-                Text("Delete all recipe")
+                Text("Delete all recipes")
             }
         }
 

@@ -1,5 +1,6 @@
 package com.sfedu.recipebook.ui.recipe
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -134,7 +135,7 @@ fun IngredientList(
             )
             TextField(
                 value = newIngredientQuantity.toString(),
-                onValueChange = { newIngredientQuantity = it.toDoubleOrNull() ?: 0.0 },
+                onValueChange = { newIngredientQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0 )},
                 modifier = Modifier.weight(1f),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -148,7 +149,9 @@ fun IngredientList(
                     newIngredientQuantity != 0.0 &&
                     newIngredientMeasure != ""
                     )
-                    ingredients.add(Triple(newIngredientName, newIngredientQuantity,newIngredientMeasure))
+                    ingredients.add(Triple(newIngredientName,
+                        round2Characters(newIngredientQuantity),
+                        newIngredientMeasure))
                 newIngredientName = ""
                 newIngredientQuantity = 0.0
                 newIngredientMeasure = ""

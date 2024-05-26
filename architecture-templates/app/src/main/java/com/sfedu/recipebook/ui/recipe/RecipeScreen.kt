@@ -12,6 +12,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,9 @@ fun RecipeScreen(
     viewModel: RecipeViewModel = hiltViewModel()
 ) {
     val recipe = currentRecipe
+    val ingredients = remember {
+        mutableStateOf(viewableIngredients)
+    }
     if(recipe != null) {
         Column {
             Row(
@@ -58,7 +63,7 @@ fun RecipeScreen(
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                 }
-                items(viewableIngredients) {
+                items(ingredients.value) {
                     Row(Modifier.fillMaxWidth()) {
                         Text(
                             text = ingredientTripleToString(it)
@@ -68,9 +73,21 @@ fun RecipeScreen(
                 }
 
                 item {
-                    Button(onClick = { onNavigateToCalc() }) {
-                        Text(text = "recalculate")
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(onClick = {
+                            resetViewableIngredients(ingredients = ingredients)
+                            onNavigateToCalc()
+                        }) {
+                            Text(text = "Recalculate ingredients")
+                        }
+                        Button(    onClick = { resetViewableIngredients(ingredients = ingredients) }) {
+                            Text(text = "Reset ingredients")
+                        }
                     }
+
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = recipe.recipeSteps)
                 }

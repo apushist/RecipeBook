@@ -16,6 +16,7 @@
 
 package com.sfedu.recipebook.ui.recipe
 
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,12 +32,13 @@ import com.sfedu.recipebook.ui.recipe.RecipeUiState.Error
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Loading
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Success
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 
 var currentRecipe = Recipe("name",0,"difficulty",
     10,1,"ingredient:0.0:measure;","recipeSteps")
 
-var viewableIngredients: List<Triple<String, Double,String>> = ingredientsStringToList(currentRecipe.ingredients)
+var viewableIngredients: MutableList<Triple<String, Double,String>> = ingredientsStringToList(currentRecipe.ingredients)
 
 
 @HiltViewModel
@@ -59,8 +61,17 @@ class RecipeViewModel @Inject constructor(
         recipeSteps: String
     ) {
         viewModelScope.launch {
-            recipeRepository.add(name,0,difficulty,cookingTime,servingSize,ingredients,recipeSteps)
-           // TODO Add imageId
+            if(checkRecipeCorrectness(
+                name,
+                //imageId,
+                difficulty,
+                cookingTime,
+                servingSize,
+                ingredients,
+                recipeSteps
+            ))
+                recipeRepository.add(name,0,difficulty,cookingTime,servingSize,ingredients,recipeSteps)
+           // TODO Add imageId сделаем к защите, надеюсь
 
         }
     }
@@ -87,6 +98,12 @@ class RecipeViewModel @Inject constructor(
 
 }
 
+sealed interface RecipeUiState {
+    object Loading : RecipeUiState
+    data class Error(val throwable: Throwable) : RecipeUiState
+    data class Success(val data: List<Recipe>) : RecipeUiState
+}
+
 fun ingredientsListToString(ingredientsList:List<Triple<String, Double,String>>):String{
     val sb = StringBuilder()
     for(component in ingredientsList){
@@ -95,7 +112,7 @@ fun ingredientsListToString(ingredientsList:List<Triple<String, Double,String>>)
     return sb.toString()
 }
 
-fun ingredientsStringToList(ingredients: String):List<Triple<String, Double,String>>{
+fun ingredientsStringToList(ingredients: String):MutableList<Triple<String, Double,String>>{
     val ingredientsStr = ingredients.split(";")
     val result: MutableList<Triple<String, Double,String>> = mutableListOf()
     for(ing in ingredientsStr){
@@ -106,12 +123,37 @@ fun ingredientsStringToList(ingredients: String):List<Triple<String, Double,Stri
     return result
 }
 
+fun checkRecipeCorrectness(
+    name: String,
+    //imageId: Int,
+    difficulty: String,
+    cookingTime: Int,
+    servingSize: Int,
+    ingredients: String,
+    recipeSteps: String
+) = name != "" &&
+    difficulty != "" &&
+    cookingTime > 0 &&
+    servingSize > 0 &&
+    ingredients != "" &&
+    recipeSteps != ""
+
+fun round2Characters(number: Double) = (number*100).roundToInt() / 100.0
+
 fun ingredientTripleToString(ingredient:Triple<String, Double,String>): String{
     return "${ingredient.first} ${ingredient.second} ${ingredient.third}"
 }
 
-sealed interface RecipeUiState {
-    object Loading : RecipeUiState
-    data class Error(val throwable: Throwable) : RecipeUiState
-    data class Success(val data: List<Recipe>) : RecipeUiState
+fun changeViewableIngredients(multiplier: Double){
+    for(i in 0..<viewableIngredients.size){
+        val ingredient = viewableIngredients[i]
+        viewableIngredients[i] = Triple(ingredient.first,
+            round2Characters(currentRecipe.ingredientsList[i].second*multiplier),
+            ingredient.third)
+    }
+}
+
+fun resetViewableIngredients(ingredients: MutableState<MutableList<Triple<String, Double, String>>>) {
+    ingredients.value = ingredientsStringToList(currentRecipe.ingredients)
+    viewableIngredients = ingredientsStringToList(currentRecipe.ingredients)
 }
