@@ -24,13 +24,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sfedu.recipebook.data.local.database.Recipe
+import com.sfedu.recipebook.ui.recipe.CalculateIngredientsScreen
 import com.sfedu.recipebook.ui.recipe.RecipeAddScreen
 import com.sfedu.recipebook.ui.recipe.RecipeListScreen
 import com.sfedu.recipebook.ui.recipe.RecipeScreen
 
-
-var currentRecipe = Recipe("name",0,"difficulty",
-    10,1,"ingredients","recipeSteps")
 
 @Composable
 fun MainNavigation() {
@@ -53,6 +51,13 @@ fun MainNavigation() {
         composable("recipeView"){
             RecipeScreen(
                 onNavigateToMain = { navController.navigate("main") },
+                onNavigateToCalc = { navController.navigate("calculateScreen") },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        composable("calculateScreen"){
+            CalculateIngredientsScreen(
+                onNavigateToRecipeView = { navController.navigate("recipeView") },
                 modifier = Modifier.padding(16.dp)
             )
         }

@@ -24,6 +24,8 @@ import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Transaction
+import com.sfedu.recipebook.ui.recipe.currentRecipe
+import com.sfedu.recipebook.ui.recipe.ingredientsStringToList
 import kotlinx.coroutines.flow.Flow
 
 @Entity
@@ -38,6 +40,10 @@ data class Recipe(
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
+
+    @Ignore
+    val ingredientsList : List<Triple<String, Double,String>> = ingredientsStringToList(ingredients)
+
 }
 
 @Dao
