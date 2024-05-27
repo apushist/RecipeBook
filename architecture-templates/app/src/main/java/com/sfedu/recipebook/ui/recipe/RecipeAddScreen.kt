@@ -1,6 +1,7 @@
 package com.sfedu.recipebook.ui.recipe
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,8 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -21,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -64,18 +68,21 @@ internal fun RecipeAddScreen(
                 value = nameRecipe,
                 onValueChange = { nameRecipe = it },
                 singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 5.dp, end = 5.dp)
             )
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = difficulty,
                 onValueChange = { difficulty = it },
                 singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp)
             )
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = cookingTime.toString(),
                 onValueChange = { cookingTime = it.toIntOrNull()?:0 },
                 singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                 )
@@ -85,19 +92,24 @@ internal fun RecipeAddScreen(
                 value = servingSize.toString(),
                 onValueChange = { servingSize = it.toIntOrNull() ?: 0 },
                 singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                 )
             )
             Spacer(modifier = Modifier.height(5.dp))
-            ingredients = ingredientsListToString(IngredientList(Modifier.fillMaxWidth()))
+
+            ingredients = ingredientsListToString(IngredientList(Modifier.fillMaxWidth().padding( start = 5.dp)))
+
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = recipeSteps,
+                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
                 onValueChange = { recipeSteps = it }
             )
             Spacer(modifier = Modifier.height(5.dp))
-            Button(modifier = Modifier.width(96.dp), onClick = {
+            Button(
+                onClick = {
                 onSave(
                     nameRecipe,
                     difficulty,
@@ -107,7 +119,12 @@ internal fun RecipeAddScreen(
                     recipeSteps
                 )
                 onNavigateToMain()
-            }) {
+            },
+                modifier = Modifier.width(116.dp).padding( start = 5.dp, end = 5.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                ) {
                 Text("Save")
             }
         }
@@ -126,40 +143,50 @@ fun IngredientList(
 
     Column(modifier) {
 
-
-        Row(Modifier.padding(8.dp)) {
+        Row() {
             TextField(
                 value = newIngredientName,
                 onValueChange = { newIngredientName = it },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxWidth().padding(  end = 5.dp),
             )
+
+            Spacer(modifier = Modifier.height(5.dp))
+        }
+
+        Row(){
             TextField(
                 value = newIngredientQuantity.toString(),
                 onValueChange = { newIngredientQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0 )},
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(top = 5.dp ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
             TextField(
                 value = newIngredientMeasure,
                 onValueChange = { newIngredientMeasure = it },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(2f).padding(top = 5.dp, end = 5.dp)
             )
-            Button(onClick = {
-                if(newIngredientName != "" &&
-                    newIngredientQuantity != 0.0 &&
-                    newIngredientMeasure != ""
+            Button(
+                onClick = {
+                    if(newIngredientName != "" &&
+                        newIngredientQuantity != 0.0 &&
+                        newIngredientMeasure != ""
                     )
-                    ingredients.add(Triple(newIngredientName,
-                        round2Characters(newIngredientQuantity),
-                        newIngredientMeasure))
-                newIngredientName = ""
-                newIngredientQuantity = 0.0
-                newIngredientMeasure = ""
-            }) {
+                        ingredients.add(Triple(newIngredientName,
+                            round2Characters(newIngredientQuantity),
+                            newIngredientMeasure))
+                    newIngredientName = ""
+                    newIngredientQuantity = 0.0
+                    newIngredientMeasure = ""
+                },
+                modifier = Modifier.width(116.dp).padding(top = 10.dp, end = 5.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+            ) {
                 Text("Add")
             }
-
         }
+
         ingredients.forEach {
             IngredientView(ingredient = it)
         }
