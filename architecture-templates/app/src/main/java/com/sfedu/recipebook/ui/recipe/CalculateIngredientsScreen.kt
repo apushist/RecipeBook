@@ -1,17 +1,26 @@
 package com.sfedu.recipebook.ui.recipe
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -21,8 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
@@ -34,7 +45,13 @@ fun CalculateIngredientsScreen(
 
     LazyColumn(modifier) {
         item{
-            Button(onClick = { onNavigateToRecipeView() }) {
+            Button(
+                onClick = { onNavigateToRecipeView() },
+                modifier = Modifier.width(156.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+            ) {
                 Text(
                     text = "Return"
                 )
@@ -44,7 +61,12 @@ fun CalculateIngredientsScreen(
             Button(onClick = {
                 changeViewableIngredients(multiplier)
                 onNavigateToRecipeView()
-            }) {
+            },
+                modifier = Modifier.width(156.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+            ) {
                 Text(
                     text = "Calculate"
                 )
@@ -76,22 +98,45 @@ fun IngredientsDropdownMenu():Double {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(Color.Gray)
-            .clickable { expanded.value = true }
+        modifier =  Modifier.fillMaxWidth()
+                            .background(Color(0xFFB2DFDB))
+                            .padding(0.dp, 10.dp, 0.dp, 10.dp)
+                            .clickable { expanded.value = true }
     ) {
+        //Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = selectedItem.value.first,
             modifier = Modifier
+                .height(30.dp)
+                //.padding(10.dp, 10.dp, 10.dp, 0.dp)
+                .background(Color(0xFFB2DFDB)),
+            style = androidx.compose.ui.text.TextStyle(textIndent = TextIndent(10.sp, 5.sp), fontSize = 26.sp,),
         )
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth().background(Color(0xFFE6E6FA))
+            .clickable { expanded.value = true }
+    ) {
+        //Spacer(modifier = Modifier.height(20.dp))
+
         TextField(
             value = selectedItemQuantity.toString(),
             onValueChange = { selectedItemQuantity = round2Characters(it.toDoubleOrNull() ?: selectedItem.value.second) },
-            modifier = Modifier.weight(1f),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.weight(2f)
+                .background(Color(0xFFE6E6FA))
+            ,
         )
         Text(
             text = selectedItem.value.third,
-            modifier = Modifier
+            modifier = Modifier.weight(1f)
+                .padding(vertical = 10.dp)
+                .padding(start = 10.dp)
+                .background(Color(0xFFE6E6FA))
+            ,
+
         )
     }
 
