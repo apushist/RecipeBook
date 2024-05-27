@@ -98,7 +98,7 @@ internal fun RecipeListScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             Button(
-                //modifier = Modifier.width(96.dp),
+                modifier = Modifier.width(156.dp),
                 onClick = {
                     onNavigateToAddScreen() },
                 shape = RoundedCornerShape(15.dp),
@@ -108,7 +108,7 @@ internal fun RecipeListScreen(
                 Text("Add recipe")
             }
             Button(
-                //modifier = Modifier.width(96.dp),
+                modifier = Modifier.width(156.dp),
                 onClick = { onDelete() } ,
                 shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
