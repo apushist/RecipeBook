@@ -56,8 +56,13 @@ fun CalculateIngredientsScreen(
                     text = "Return"
                 )
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             val multiplier = IngredientsDropdownMenu()
 
+            Spacer(modifier = Modifier.height(10.dp))
+            
             Button(onClick = {
                 changeViewableIngredients(multiplier)
                 onNavigateToRecipeView()
@@ -116,7 +121,7 @@ fun IngredientsDropdownMenu():Double {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(Color(0xFFE6E6FA))
+        modifier = Modifier.fillMaxWidth().background(Color(0xFFE1E2EC))
             .clickable { expanded.value = true }
     ) {
         //Spacer(modifier = Modifier.height(20.dp))
@@ -134,7 +139,7 @@ fun IngredientsDropdownMenu():Double {
             modifier = Modifier.weight(1f)
                 .padding(vertical = 10.dp)
                 .padding(start = 10.dp)
-                .background(Color(0xFFE6E6FA))
+                .background(Color(0xFFE1E2EC))
             ,
 
         )
