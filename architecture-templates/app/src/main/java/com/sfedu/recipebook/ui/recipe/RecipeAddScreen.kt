@@ -74,7 +74,7 @@ internal fun RecipeAddScreen(
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = cookingTime.toString(),
-                onValueChange = { cookingTime = it.toInt() },
+                onValueChange = { cookingTime = it.toIntOrNull()?:0 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -83,7 +83,7 @@ internal fun RecipeAddScreen(
             Spacer(modifier = Modifier.height(5.dp))
             TextField(
                 value = servingSize.toString(),
-                onValueChange = { servingSize = it.toInt() },
+                onValueChange = { servingSize = it.toIntOrNull() ?: 0 },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
