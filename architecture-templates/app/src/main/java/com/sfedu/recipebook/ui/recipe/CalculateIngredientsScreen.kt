@@ -62,7 +62,7 @@ fun CalculateIngredientsScreen(
             val multiplier = IngredientsDropdownMenu()
 
             Spacer(modifier = Modifier.height(10.dp))
-            
+
             Button(onClick = {
                 changeViewableIngredients(multiplier)
                 onNavigateToRecipeView()

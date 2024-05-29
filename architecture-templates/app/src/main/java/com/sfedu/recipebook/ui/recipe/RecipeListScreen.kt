@@ -83,7 +83,25 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FabPosition
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.DrawerValue
+
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
+import androidx.compose.material3.rememberDrawerState
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
+
 
 
 @Composable
@@ -115,67 +133,136 @@ internal fun RecipeListScreen(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        topBar = {
-            @OptIn(ExperimentalMaterial3Api::class)
-            TopAppBar(
-                title = { Text("RecipeBook", fontSize = 22.sp) },
-                navigationIcon = {
-                    IconButton( onClick = { }
-                    ) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Меню")
-                      }
-                },
-                actions ={
-                    IconButton( onClick = { }
-                    ) {
-                        Icon(Icons.Filled.Search, contentDescription = "Поиск")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                    titleContentColor = Color.Black,
-                    navigationIconContentColor = Color(0xFF4DB6AC),
-                    actionIconContentColor = Color(0xFF4DB6AC)
-                )
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
-                onClick = { onNavigateToAddScreen() },
+    var drawerState = rememberDrawerState(DrawerValue.Closed)//by remember { mutableStateOf(DrawerValue.Closed) }
+    val scope = rememberCoroutineScope()
 
-            )
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-    ){
-        Box(
-            modifier = Modifier.fillMaxSize()
-                               .padding(it)
-                               .background(Color(0xFFE0F2F1)),
-            //contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-
-                    .padding(bottom = 24.dp)
-            ) {
-                LazyColumn(
-                    modifier = Modifier.padding(10.dp)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        gesturesEnabled = true,
+        drawerContent = {
+            ModalDrawerSheet{
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
                 ) {
-                    items(recipes) { recipe ->
-                        RecipeCard(
-                            recipe = recipe,
-                            modifier = Modifier.padding(10.dp),
-                            onNavigateToRecipeView = onNavigateToRecipeView
+                    var expanded by remember { mutableStateOf(false)}
+
+                    Box(
+                        contentAlignment = Alignment.TopStart,
+                        modifier = Modifier//.fillMaxHeight()
+                                            .clickable(onClick = { expanded = true })
+                    ) {
+                        Text("Change language")
+
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                        ) {
+                            DropdownMenuItem(
+                                onClick = { // TODO add a Russian translation
+                                     },
+                                text = { Text("Russian") }
+                            )
+
+                            DropdownMenuItem(
+                                onClick = { // TODO add an English translation
+                                      },
+                                text = { Text("English") }
+                            )
+                        }
+
+                    }
+
+                    Box(
+                        contentAlignment = Alignment.BottomStart,
+                        modifier = Modifier.fillMaxHeight()
+                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Button(
+                            onClick = { onDelete() } ,
+                            modifier = Modifier.width(156.dp),
+                            shape = RoundedCornerShape(15.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                            border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                        ) {
+                            Text("Delete all recipes")
+                        }
+                    }
+                }
+            }
+        },
+        content = {
+            Scaffold(
+                topBar = {
+                    @OptIn(ExperimentalMaterial3Api::class)
+                    TopAppBar(
+                        title = { Text("RecipeBook", fontSize = 22.sp) },
+
+                        navigationIcon = {
+                            IconButton(onClick = { scope.launch {drawerState.open() }}) {
+                                Icon(Icons.Filled.Menu, contentDescription = "Меню")
+                            }
+                        },
+
+                        actions ={
+                            IconButton( onClick = { }
+                            ) {
+                                Icon(Icons.Filled.Search, contentDescription = "Поиск")
+                            }
+                        },
+
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.White,
+                            titleContentColor = Color.Black,
+                            navigationIconContentColor = Color(0xFF4DB6AC),
+                            actionIconContentColor = Color(0xFF4DB6AC)
                         )
+                    )
+                },
+
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { onNavigateToAddScreen() },
+                        content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
+                        //TODO Make sth with botton color
+                        //containerColor = FloatingActionButtonDefaults.containerColor,
+                    )
+                },
+
+                floatingActionButtonPosition = FabPosition.Center,
+
+                ){
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                        .background(Color(0xFFE0F2F1)),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 24.dp)
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.padding(10.dp)
+                        ) {
+                            items(recipes) { recipe ->
+                                RecipeCard(
+                                    recipe = recipe,
+                                    modifier = Modifier.padding(10.dp),
+                                    onNavigateToRecipeView = onNavigateToRecipeView
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
-    }
+    )
 }
+
+
 
 @Composable
 fun RecipeCard(
@@ -191,21 +278,12 @@ fun RecipeCard(
     },
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB2DFDB), contentColor = Color.Black),
-        //colors = ButtonDefaults.textButtonColors(),
-        //modifier = Modifier.padding(10.dp),
     ) {
         Text(
             recipe.name,
             modifier = Modifier
-                //.padding(0.dp, 40.dp, 10.dp, 10.dp
-                //.background(
-                //  if(index%2==0) Color(0xFFC8E6C9) else Color(0xFFE8F5E9) )
                 .fillMaxWidth()
                 .height(20.dp),
-            //style = TextStyle(textIndent = TextIndent(15.sp, 10.sp), fontSize = 26.sp,)
-
         )
-
     }
-
 }
