@@ -41,6 +41,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -50,12 +51,40 @@ import com.sfedu.recipebook.data.local.database.Recipe
 import com.sfedu.recipebook.ui.recipe.currentRecipe
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.em
+import com.sfedu.recipebook.R
+import android.os.Bundle
+import android.text.Layout
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FabPosition
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.Alignment
+
 
 @Composable
 fun RecipeListScreen(
@@ -86,46 +115,63 @@ internal fun RecipeListScreen(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        //.padding(bottom = 24.dp),
-        .background(Color(0xFFE0F2F1)),
-        ){
-        Row(
-            Modifier.fillMaxWidth()
-                .background(Color.White)
-                .padding(10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            Button(
-                modifier = Modifier.width(156.dp),
-                onClick = {
-                    onNavigateToAddScreen() },
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
-                ) {
-                Text("Add recipe")
-            }
-            Button(
-                modifier = Modifier.width(156.dp),
-                onClick = { onDelete() } ,
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
-            ) {
-                Text("Delete all recipes")
-            }
-        }
+    Scaffold(
+        topBar = {
+            @OptIn(ExperimentalMaterial3Api::class)
+            TopAppBar(
+                title = { Text("RecipeBook", fontSize = 22.sp) },
+                navigationIcon = {
+                    IconButton( onClick = { }
+                    ) {
+                        Icon(Icons.Filled.Menu, contentDescription = "Меню")
+                      }
+                },
+                actions ={
+                    IconButton( onClick = { }
+                    ) {
+                        Icon(Icons.Filled.Search, contentDescription = "Поиск")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = Color.Black,
+                    navigationIconContentColor = Color(0xFF4DB6AC),
+                    actionIconContentColor = Color(0xFF4DB6AC)
+                )
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
+                onClick = { onNavigateToAddScreen() },
 
-        LazyColumn(
-            modifier = Modifier.padding(10.dp),
-        ){
-            items(recipes){recipe -> RecipeCard(
-                recipe = recipe,
-                //index = index,
-                modifier = modifier.padding(10.dp),
-                onNavigateToRecipeView = onNavigateToRecipeView)
+            )
+        },
+        floatingActionButtonPosition = FabPosition.Center,
+    ){
+        Box(
+            modifier = Modifier.fillMaxSize()
+                               .padding(it)
+                               .background(Color(0xFFE0F2F1)),
+            //contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+
+                    .padding(bottom = 24.dp)
+            ) {
+                LazyColumn(
+                    modifier = Modifier.padding(10.dp)
+                ) {
+                    items(recipes) { recipe ->
+                        RecipeCard(
+                            recipe = recipe,
+                            modifier = Modifier.padding(10.dp),
+                            onNavigateToRecipeView = onNavigateToRecipeView
+                        )
+                    }
+                }
             }
         }
     }
@@ -153,7 +199,7 @@ fun RecipeCard(
             modifier = Modifier
                 //.padding(0.dp, 40.dp, 10.dp, 10.dp
                 //.background(
-                  //  if(index%2==0) Color(0xFFC8E6C9) else Color(0xFFE8F5E9) )
+                //  if(index%2==0) Color(0xFFC8E6C9) else Color(0xFFE8F5E9) )
                 .fillMaxWidth()
                 .height(20.dp),
             //style = TextStyle(textIndent = TextIndent(15.sp, 10.sp), fontSize = 26.sp,)
