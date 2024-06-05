@@ -58,6 +58,8 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.material3.AlertDialog
 
+import androidx.compose.foundation.layout.IntrinsicSize
+
 @Composable
 fun RecipeScreen(
     onNavigateToMain: () -> Unit,
@@ -159,6 +161,37 @@ fun RecipeScreen(
                         )
                     )
                 },
+
+                bottomBar = {
+                    BottomAppBar(
+                        containerColor = Color.White,
+                        contentColor = Color.LightGray
+                    ){
+                        Button(onClick = { resetViewableIngredients(ingredients = ingredients) },
+
+                            modifier = Modifier.width(126.dp),
+                            shape = RoundedCornerShape(15.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                            border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
+                        ) {
+                            Text(text = "Reset")
+                        }
+
+                        Spacer(Modifier.weight(1f, true))
+
+                        Button(onClick = {
+                            resetViewableIngredients(ingredients = ingredients)
+                            onNavigateToCalc() },
+
+                            modifier = Modifier.width(126.dp),
+                            shape = RoundedCornerShape(15.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                            border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
+                        ) {
+                            Text(text = "Recalculate")
+                        }
+                    }
+                },
             ){
                 Box(
                     modifier = Modifier
@@ -171,29 +204,49 @@ fun RecipeScreen(
                             .fillMaxWidth()
                             .padding(bottom = 24.dp)
                     ) {
-                        LazyColumn(modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(0.dp)) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(0.dp)
+                        ) {
                             item {
-                                Row(
-                                    Modifier.fillMaxWidth()
-                                        //.background(Color.White)
-                                        .padding(10.dp, 10.dp, 10.dp, 10.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween
+                                Column(
+                                    Modifier
+                                        .padding(10.dp, 10.dp, 10.dp, 10.dp)
+                                        .width(IntrinsicSize.Max)
                                 ) {
                                     Text(
                                         text = recipe.name,
-                                        modifier = Modifier.width(256.dp)
-                                            .height(30.dp)
-                                            //.padding(10.dp, 10.dp, 10.dp, 0.dp)
+                                        modifier = Modifier
+                                            //.weight(4f, true)
+                                            .fillMaxWidth()
                                             .background(Color(0xFFB2DFDB)),
                                         style = androidx.compose.ui.text.TextStyle(textIndent = TextIndent(10.sp, 5.sp), fontSize = 26.sp,),
-
-                                        )
-                                    Spacer(modifier = Modifier.height(20.dp))
+                                    )
                                 }
 
+                            }
+                            item {
+                                Row (
+                                    modifier = Modifier.padding(10.dp, 10.dp, 0.dp, 0.dp)
+                                ){
+                                    Text(
+                                        text = "Ingredients",
+                                    )
+                                    Box (
+                                        modifier = Modifier.fillMaxWidth()
+                                        .padding(5.dp, 10.dp, 10.dp, 0.dp),
+                                        contentAlignment = Alignment.Center
+                                    ){
+                                        Box(
+                                            modifier = Modifier.fillMaxWidth()
+                                                .background(Color(0xFFB2DFDB))
+                                                //.padding(0.dp, 0.dp, 0.dp, 0.dp)
+                                                .height(2.dp),
+                                        )
+                                    }
+                                }
 
-
+                                Spacer(modifier = Modifier.height(10.dp))
                             }
                             items(ingredients.value) {
                                 Row(Modifier.fillMaxWidth()) {
@@ -202,43 +255,33 @@ fun RecipeScreen(
                                         modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp),
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(10.dp))
                             }
-
                             item {
-                                Row(
-                                    Modifier.fillMaxWidth()
-                                        .background(Color.White)
-                                        .padding(10.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Button(onClick = {
-                                        resetViewableIngredients(ingredients = ingredients)
-                                        onNavigateToCalc() },
+                                Spacer(modifier = Modifier.height(10.dp))
 
-                                        modifier = Modifier.width(156.dp),
-                                        shape = RoundedCornerShape(15.dp),
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
-                                    ) {
-                                        Text(text = "Recalculate ingredients")
-                                    }
-                                    Button(onClick = { resetViewableIngredients(ingredients = ingredients) },
-
-                                        modifier = Modifier.width(156.dp),
-                                        shape = RoundedCornerShape(15.dp),
-                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
-                                    ) {
-                                        Text(text = "Reset ingredients")
+                                Row (
+                                    modifier = Modifier.padding(10.dp, 10.dp, 0.dp, 0.dp)
+                                ){
+                                    Text(
+                                        text = "Steps",
+                                    )
+                                    Box (
+                                        modifier = Modifier.fillMaxWidth()
+                                            .padding(5.dp, 10.dp, 10.dp, 0.dp),
+                                        contentAlignment = Alignment.Center
+                                    ){
+                                        Box(
+                                            modifier = Modifier.fillMaxWidth()
+                                                .background(Color(0xFFB2DFDB))
+                                                .height(2.dp),
+                                        )
                                     }
                                 }
-                                Spacer(modifier = Modifier.height(10.dp))
+
 
                                 Text(text = recipe.recipeSteps,
                                     modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 0.dp),
                                 )
-                                Spacer(modifier = Modifier.height(10.dp))
                             }
                         }
                     }
