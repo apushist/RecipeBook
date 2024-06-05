@@ -135,7 +135,7 @@ fun IngredientsDropdownMenu():Double {
             value = selectedItemQuantity.toString(),
             onValueChange = { selectedItemQuantity = round2Characters(it.toDoubleOrNull() ?: selectedItem.value.second) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.weight(2f)
+            modifier = Modifier.weight(1f)
                 .background(Color(0xFFE6E6FA))
             ,
         )
