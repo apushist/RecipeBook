@@ -102,6 +102,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.setValue
 
+import androidx.compose.material3.AlertDialog
 
 
 @Composable
@@ -179,14 +180,46 @@ internal fun RecipeListScreen(
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
 
+                        val openDialog = remember { mutableStateOf(false) }
                         Button(
-                            onClick = { onDelete() } ,
+                            { openDialog.value = true },
                             modifier = Modifier.width(156.dp),
                             shape = RoundedCornerShape(15.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                             border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                         ) {
                             Text("Delete all recipes")
+                        }
+                        if (openDialog.value) {
+                            AlertDialog(
+                                onDismissRequest = { openDialog.value = false},
+                                title = { Text("Delete all recipes?") },
+                                confirmButton = {
+                                    Button(
+                                        onClick = { onDelete(); openDialog.value = false },
+                                        //openDialog.value = false ,
+                                        modifier = Modifier.width(116.dp),
+                                        shape = RoundedCornerShape(15.dp),
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                                    ) {
+                                        Text("Delete")
+                                    }
+                                },
+                                dismissButton = {
+                                    Button(
+                                        onClick = { openDialog.value = false },
+                                        modifier = Modifier.width(116.dp),
+                                        shape = RoundedCornerShape(15.dp),
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                                    ) {
+                                        Text("Cancel", fontSize = 12.sp)
+                                    }
+                                },
+                                containerColor = Color.White,
+                                titleContentColor = Color.Black,
+                            )
                         }
                     }
                 }
