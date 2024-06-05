@@ -31,12 +31,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sfedu.recipebook.R
 
 @Composable
 fun CalculateIngredientsScreen(
@@ -55,7 +57,7 @@ fun CalculateIngredientsScreen(
                 border = BorderStroke(2.dp, Color(0xFF4DB6AC))
             ) {
                 Text(
-                    text = "Return"
+                    text = stringResource(id = R.string.return_button)
                 )
             }
 
@@ -75,7 +77,7 @@ fun CalculateIngredientsScreen(
                 border = BorderStroke(2.dp, Color(0xFF4DB6AC))
             ) {
                 Text(
-                    text = "Calculate"
+                    text = stringResource(id = R.string.calculate_button)
                 )
             }
         }
@@ -108,10 +110,11 @@ fun IngredientsDropdownMenu():Double {
     }
 
     Row(
-        modifier =  Modifier.fillMaxWidth()
-                            .background(Color(0xFFB2DFDB))
-                            .padding(0.dp, 10.dp, 0.dp, 10.dp)
-                            .clickable { expanded.value = true }
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFB2DFDB))
+            .padding(0.dp, 10.dp, 0.dp, 10.dp)
+            .clickable { expanded.value = true }
     ) {
         //Spacer(modifier = Modifier.height(20.dp))
 
