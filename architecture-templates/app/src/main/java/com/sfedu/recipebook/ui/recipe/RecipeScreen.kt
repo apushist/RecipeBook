@@ -123,7 +123,7 @@ fun RecipeScreen(
                                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                                     ) {
-                                                        Text("Cancel", fontSize = 12.sp)
+                                                        Text("Cancel")
                                                     }
                                                 },
                                                 dismissButton = {
@@ -201,7 +201,7 @@ fun RecipeScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                     ) {
-                                        Text("Cancel", fontSize = 12.sp)
+                                        Text("Cancel")
                                     }
                                 },
                                 containerColor = Color.White,
