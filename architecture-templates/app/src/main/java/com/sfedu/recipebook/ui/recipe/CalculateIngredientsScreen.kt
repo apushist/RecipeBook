@@ -171,6 +171,13 @@ fun IngredientsDropdownMenu():Double {
                             .weight(1f)
                             .background(Color(0xFFE6E6FA))
             ,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFE1E2EC),
+                unfocusedTextColor = Color.Black,
+                focusedContainerColor = Color(0xFFE1E2EC),
+                focusedTextColor = Color.Black,
+                focusedIndicatorColor = Color(0xFF4DB6AC),
+            ),
         )
         Text(
             text = selectedItem.value.third,
