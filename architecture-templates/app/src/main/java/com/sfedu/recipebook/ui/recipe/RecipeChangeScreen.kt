@@ -52,7 +52,7 @@ fun RecipeChangeScreen(
         onNavigateToRecipeView = onNavigateToRecipeView,
         onUpdate = viewModel::updateRecipe,
         modifier = modifier
-        )
+    )
 
 }
 
@@ -202,6 +202,28 @@ internal fun RecipeChangeScreen(
 
                             )
                         Spacer(modifier = Modifier.height(5.dp))
+
+                        val multiplier = IngredientsDropdownMenu()
+
+                        Row(
+                            modifier = Modifier.padding(start = 5.dp, end = 5.dp)
+                        ) {
+                            Spacer(modifier = Modifier.weight(2f,true))
+
+                            Button(onClick = {
+                                changeViewableIngredients(multiplier)
+                                onNavigateToRecipeView()
+                            },
+                                modifier = Modifier.width(116.dp),
+                                shape = RoundedCornerShape(15.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.save_button)
+                                )
+                            }
+                        }
 
                         ingredients = ingredientsListToString(IngredientList(
                             Modifier
