@@ -57,6 +57,7 @@ import androidx.compose.material3.AlertDialog
 @Composable
 fun RecipeScreen(
     onNavigateToMain: () -> Unit,
+    onNavigateToRecipeView: () -> Unit,
     onNavigateToCalc: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()
@@ -181,7 +182,7 @@ fun RecipeScreen(
                                     Button(
                                         onClick = {
                                                 resetViewableIngredients(ingredients = ingredients)
-                                                onNavigateToMain(); openDialog.value = false
+                                                onNavigateToRecipeView(); openDialog.value = false
                                         },
                                         //openDialog.value = false ,
                                         modifier = Modifier.width(116.dp),

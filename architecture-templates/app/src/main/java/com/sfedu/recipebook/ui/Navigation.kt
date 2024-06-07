@@ -52,6 +52,7 @@ fun MainNavigation() {
             RecipeScreen(
                 onNavigateToMain = { navController.navigate("main") },
                 onNavigateToCalc = { navController.navigate("calculateScreen") },
+                onNavigateToRecipeView = { navController.navigate("recipeView") },
                 modifier = Modifier.padding(16.dp)
             )
         }
