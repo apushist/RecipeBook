@@ -9,18 +9,19 @@ import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import com.sfedu.recipebook.ui.recipe.ingredientsStringToList
 import kotlinx.coroutines.flow.Flow
 
 @Entity
 data class Recipe(
-    val name: String,
-    val imageId: Int,
-    val difficulty: String,
-    val cookingTime: Int,
-    val servingSize: Int,
-    val ingredients: String,
-    val recipeSteps: String,
+    var name: String,
+    var imageId: Int,
+    var difficulty: String,
+    var cookingTime: Int,
+    var servingSize: Int,
+    var ingredients: String,
+    var recipeSteps: String,
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
@@ -54,5 +55,8 @@ interface RecipeDao {
 
     @Query("DELETE FROM recipe")
     suspend fun deleteAll()
+
+    @Update
+    suspend fun updateRecipe(recipe: Recipe)
 
 }

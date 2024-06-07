@@ -61,6 +61,7 @@ fun RecipeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
     onNavigateToCalc: () -> Unit,
+    onNavigateToChange: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()
 ) {
@@ -100,6 +101,8 @@ fun RecipeScreen(
                                     ) {
                                         TextButton(
                                             {
+                                                currentRecipe = recipe
+                                                onNavigateToChange()
                                                 // TODO make navigation to ChangeRecipeScreen and add this screen
                                             }
                                         ){

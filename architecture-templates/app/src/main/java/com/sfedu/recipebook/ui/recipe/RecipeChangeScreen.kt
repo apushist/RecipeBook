@@ -32,30 +32,30 @@ import kotlin.reflect.KFunction6
 import com.sfedu.recipebook.R
 
 @Composable
-fun RecipeAddScreen(
+fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()) {
-    RecipeAddScreen(
+    RecipeChangeScreen(
         onNavigateToMain = onNavigateToMain,
-        onSave = viewModel::addRecipe,
+        onUpdate = viewModel::updateRecipe,
         modifier = modifier
         )
 
 }
 
 @Composable
-internal fun RecipeAddScreen(
+internal fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
-    onSave: KFunction6<String, String, Int, Int, String, String, Unit>,
+    onUpdate: KFunction6<String, String, Int, Int, String, String, Unit>,
     modifier: Modifier = Modifier
 ) {
-    var nameRecipe by remember { mutableStateOf("") }
-    var difficulty by remember { mutableStateOf("") }
-    var cookingTime by remember { mutableStateOf("") }
-    var servingSize by remember { mutableStateOf("") }
-    var ingredients by remember { mutableStateOf("") }
-    var recipeSteps by remember { mutableStateOf("") }
+    var nameRecipe by remember { mutableStateOf(currentRecipe.name) }
+    var difficulty by remember { mutableStateOf(currentRecipe.difficulty) }
+    var cookingTime by remember { mutableStateOf(currentRecipe.cookingTime) }
+    var servingSize by remember { mutableStateOf(currentRecipe.servingSize) }
+    var ingredients by remember { mutableStateOf(currentRecipe.ingredients) }
+    var recipeSteps by remember { mutableStateOf(currentRecipe.recipeSteps) }
     //var imageRecipe by remember { mutableStateOf(0) }
 
     LazyColumn(
@@ -65,12 +65,15 @@ internal fun RecipeAddScreen(
     ) {
 
         item {
+
             TextField(
                 value = nameRecipe,
                 onValueChange = { nameRecipe = it },
                 //supportingText = { Text(text = stringResource(id = R.string.recipe_name_text_field))},
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 5.dp, end = 5.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 5.dp, start = 5.dp, end = 5.dp),
                 placeholder = { Text(stringResource(id = R.string.recipe_name_text_field)) },
             )
 
@@ -81,15 +84,17 @@ internal fun RecipeAddScreen(
                 onValueChange = { difficulty = it },
                 //supportingText = { Text(text = stringResource(id = R.string.difficulty_text_field))},
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp, end = 5.dp),
                 placeholder = { Text(stringResource(id = R.string.difficulty_text_field)) },
             )
 
             Spacer(modifier = Modifier.height(5.dp))
 
             TextField(
-                value = cookingTime,
-                onValueChange = { cookingTime = it },
+                value = cookingTime.toString(),
+                onValueChange = { cookingTime = it.toIntOrNull()?:0 },
                 //supportingText = { Text(text = stringResource(id = R.string.cooking_time_text_field))},
                 singleLine = true,
                 modifier = Modifier
@@ -105,8 +110,8 @@ internal fun RecipeAddScreen(
             Spacer(modifier = Modifier.height(5.dp))
 
             TextField(
-                value = servingSize,
-                onValueChange = { servingSize = it },
+                value = servingSize.toString(),
+                onValueChange = { servingSize = it.toIntOrNull()?:0 },
                 //supportingText = { Text(text = stringResource(id = R.string.serving_size_text_field))},
                 singleLine = true,
                 modifier = Modifier
@@ -130,7 +135,9 @@ internal fun RecipeAddScreen(
 
             TextField(
                 value = recipeSteps,
-                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp, end = 5.dp),
                 onValueChange = { recipeSteps = it },
                 placeholder = { Text(stringResource(id = R.string.recipe_steps_text_field)) },
             )
@@ -139,11 +146,11 @@ internal fun RecipeAddScreen(
 
             Button(
                 onClick = {
-                onSave(
+                onUpdate(
                     nameRecipe,
                     difficulty,
-                    cookingTime.toIntOrNull()?:0,
-                    servingSize.toIntOrNull()?:0,
+                    cookingTime,//.toIntOrNull()?:0,
+                    servingSize,//.toIntOrNull()?:0,
                     ingredients,
                     recipeSteps
                 )
@@ -156,86 +163,10 @@ internal fun RecipeAddScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                 border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                 ) {
-                Text(stringResource(id = R.string.save_button))
+                Text("stringResource(id = R.string.save_button)")
             }
         }
     }
 }
 
 
-@Composable
-fun IngredientList(
-    modifier: Modifier = Modifier
-):List<Triple<String, Double,String>> {
-    var ingredients by remember { mutableStateOf(mutableListOf<Triple<String, Double,String>>() ) }
-    var newIngredientName by remember { mutableStateOf("") }
-    var newIngredientQuantity by remember { mutableDoubleStateOf(0.0) }
-    var newIngredientMeasure by remember { mutableStateOf("") }
-
-    Column(modifier) {
-
-        Row() {
-            TextField(
-                value = newIngredientName,
-                onValueChange = { newIngredientName = it },
-                modifier = Modifier.fillMaxWidth().padding(  end = 5.dp),
-                placeholder = { Text( stringResource(id = R.string.ingredient_name_text_field)) },
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-        }
-
-        Row(){
-            TextField(
-                value = newIngredientQuantity.toString(),
-                onValueChange = { newIngredientQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0 )},
-                modifier = Modifier.weight(1f).padding(top = 5.dp ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            )
-            TextField(
-                value = newIngredientMeasure,
-                onValueChange = { newIngredientMeasure = it },
-                modifier = Modifier.weight(2f).padding(top = 5.dp, end = 5.dp),
-                placeholder = { Text(stringResource(id = R.string.ingredient_measure_text_field)) },
-            )
-            Button(
-                onClick = {
-                    if(newIngredientName != "" &&
-                        newIngredientQuantity != 0.0 &&
-                        newIngredientMeasure != ""
-                    )
-                        ingredients.add(Triple(newIngredientName,
-                            round2Characters(newIngredientQuantity),
-                            newIngredientMeasure))
-                    newIngredientName = ""
-                    newIngredientQuantity = 0.0
-                    newIngredientMeasure = ""
-                },
-                modifier = Modifier
-                    .width(116.dp)
-                    .padding(top = 10.dp, end = 5.dp),
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
-            ) {
-                Text(stringResource(id = R.string.add_icon_description))
-            }
-        }
-
-        ingredients.forEach {
-            IngredientView(ingredient = it)
-        }
-    }
-    return ingredients
-}
-
-@Composable
-fun IngredientView(
-    ingredient: Triple<String, Double,String>
-){
-    Row(Modifier.fillMaxWidth(0.8f)) {
-        Text(
-            text = ingredientTripleToString(ingredient)
-        )
-    }
-}

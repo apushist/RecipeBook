@@ -27,6 +27,9 @@ interface RecipeRepository {
     suspend fun deleteAll()
 
     suspend fun deleteRecipe(recipe: Recipe)
+
+    suspend fun updateRecipe(recipe: Recipe)
+
 }
 
 class DefaultRecipeRepository @Inject constructor(
@@ -76,5 +79,9 @@ class DefaultRecipeRepository @Inject constructor(
 
     override suspend fun deleteRecipe(recipe: Recipe) {
         recipeDao.deleteRecipe(recipe)
+    }
+
+    override suspend fun updateRecipe(recipe: Recipe) {
+        recipeDao.updateRecipe(recipe)
     }
 }

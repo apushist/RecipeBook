@@ -63,6 +63,38 @@ class RecipeViewModel @Inject constructor(
         }
     }
 
+    fun updateRecipe(
+        name: String,
+        //imageId: Int,
+        difficulty: String,
+        cookingTime: Int,
+        servingSize: Int,
+        ingredients: String,
+        recipeSteps: String
+    ) {
+        viewModelScope.launch {
+            /*if(checkRecipeCorrectness(
+                    name,
+                    //imageId,
+                    difficulty,
+                    cookingTime,
+                    servingSize,
+                    ingredients,
+                    recipeSteps
+                )){*/
+                currentRecipe.name = name
+                currentRecipe.difficulty = difficulty
+                currentRecipe.cookingTime = cookingTime
+                currentRecipe.servingSize = servingSize
+                currentRecipe.ingredients = ingredients
+                currentRecipe.recipeSteps = recipeSteps
+                recipeRepository.updateRecipe(currentRecipe)
+            //}
+            // TODO Add imageId сделаем к защите, надеюсь
+
+        }
+    }
+
     fun getRecipeById(recipeId: Int): Recipe?{
         var res: Recipe? = null
         viewModelScope.launch {

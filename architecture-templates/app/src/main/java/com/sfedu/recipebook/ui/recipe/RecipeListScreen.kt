@@ -65,6 +65,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.setValue
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.res.stringResource
+import com.sfedu.recipebook.R
 
 
 @Composable

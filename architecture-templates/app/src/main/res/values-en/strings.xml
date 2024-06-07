@@ -19,7 +19,7 @@
     <string name="search_icon_description">Search</string>
     <string name="add_icon_description">Add</string>
     <string name="ingredient_name_text_field">Ingredient name</string>
-    <string name="ingredient_measure_text_field">Ingredient measure</string>
+    <string name="ingredient_measure_text_field">measure</string>
     <string name="recipe_name_text_field">Recipe name</string>
     <string name="difficulty_text_field">Difficulty</string>
     <string name="recipe_steps_text_field">Recipe steps</string>

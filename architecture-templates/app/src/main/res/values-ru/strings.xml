@@ -19,7 +19,7 @@
     <string name="search_icon_description">Поиск</string>
     <string name="add_icon_description">Добавить</string>
     <string name="ingredient_name_text_field">Название ингредиента</string>
-    <string name="ingredient_measure_text_field">Мера ингредиента</string>
+    <string name="ingredient_measure_text_field">ед. изм.</string>
     <string name="recipe_name_text_field">Название рецепта</string>
     <string name="difficulty_text_field">Сложность</string>
     <string name="recipe_steps_text_field">Шаги рецепта</string>

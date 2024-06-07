@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sfedu.recipebook.data.local.database.Recipe
 import com.sfedu.recipebook.ui.recipe.CalculateIngredientsScreen
 import com.sfedu.recipebook.ui.recipe.RecipeAddScreen
+import com.sfedu.recipebook.ui.recipe.RecipeChangeScreen
 import com.sfedu.recipebook.ui.recipe.RecipeListScreen
 import com.sfedu.recipebook.ui.recipe.RecipeScreen
 
@@ -40,6 +41,7 @@ fun MainNavigation(context: Context) {
                 onNavigateToMain = { navController.navigate("main") },
                 onNavigateToCalc = { navController.navigate("calculateScreen") },
                 onNavigateToRecipeView = { navController.navigate("recipeView") },
+                onNavigateToChange = { navController.navigate("changeScreen") },
                 modifier = Modifier.padding(16.dp)
             )
         }
@@ -49,6 +51,11 @@ fun MainNavigation(context: Context) {
                 modifier = Modifier.padding(16.dp)
             )
         }
-        // TODO: Add more destinations
+        composable("changeScreen"){
+            RecipeChangeScreen(
+                onNavigateToMain = { navController.navigate("main") },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
