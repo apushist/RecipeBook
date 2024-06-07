@@ -49,12 +49,12 @@ internal fun RecipeAddScreen(
     onSave: KFunction6<String, String, Int, Int, String, String, Unit>,
     modifier: Modifier = Modifier
 ) {
-    var nameRecipe by remember { mutableStateOf("Name") }
-    var difficulty by remember { mutableStateOf("Easy") }
+    var nameRecipe by remember { mutableStateOf("") }
+    var difficulty by remember { mutableStateOf("") }
     var cookingTime by remember { mutableIntStateOf(10) }
     var servingSize by remember { mutableIntStateOf(1) }
     var ingredients by remember { mutableStateOf("Flour:1:cup;Milk:1:cup;") }
-    var recipeSteps by remember { mutableStateOf("1. Mix all together\n2. Cook in oven") }
+    var recipeSteps by remember { mutableStateOf("") }
     //var imageRecipe by remember { mutableStateOf(0) }
 
     LazyColumn(
@@ -68,16 +68,22 @@ internal fun RecipeAddScreen(
                 value = nameRecipe,
                 onValueChange = { nameRecipe = it },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 5.dp, end = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 5.dp, end = 5.dp),
+                placeholder = { Text("Name") },
             )
+
             Spacer(modifier = Modifier.height(5.dp))
+
             TextField(
                 value = difficulty,
                 onValueChange = { difficulty = it },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp)
+                modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
+                placeholder = { Text("Complexity of cooking") },
             )
+
             Spacer(modifier = Modifier.height(5.dp))
+
             TextField(
                 value = cookingTime.toString(),
                 onValueChange = { cookingTime = it.toIntOrNull()?:0 },
@@ -87,7 +93,9 @@ internal fun RecipeAddScreen(
                     keyboardType = KeyboardType.Number,
                 )
             )
+
             Spacer(modifier = Modifier.height(5.dp))
+
             TextField(
                 value = servingSize.toString(),
                 onValueChange = { servingSize = it.toIntOrNull() ?: 0 },
@@ -102,12 +110,16 @@ internal fun RecipeAddScreen(
             ingredients = ingredientsListToString(IngredientList(Modifier.fillMaxWidth().padding( start = 5.dp)))
 
             Spacer(modifier = Modifier.height(5.dp))
+
             TextField(
                 value = recipeSteps,
                 modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
-                onValueChange = { recipeSteps = it }
+                onValueChange = { recipeSteps = it },
+                placeholder = { Text("Cooking steps") },
             )
+
             Spacer(modifier = Modifier.height(5.dp))
+
             Button(
                 onClick = {
                 onSave(
@@ -137,9 +149,9 @@ fun IngredientList(
     modifier: Modifier = Modifier
 ):List<Triple<String, Double,String>> {
     var ingredients by remember { mutableStateOf(mutableListOf<Triple<String, Double,String>>() ) }
-    var newIngredientName by remember { mutableStateOf("IngredientName") }
+    var newIngredientName by remember { mutableStateOf("") }
     var newIngredientQuantity by remember { mutableDoubleStateOf(0.0) }
-    var newIngredientMeasure by remember { mutableStateOf("IngredientMeasure") }
+    var newIngredientMeasure by remember { mutableStateOf("") }
 
     Column(modifier) {
 
@@ -148,6 +160,7 @@ fun IngredientList(
                 value = newIngredientName,
                 onValueChange = { newIngredientName = it },
                 modifier = Modifier.fillMaxWidth().padding(  end = 5.dp),
+                placeholder = { Text("Ingredient Name") },
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -158,12 +171,13 @@ fun IngredientList(
                 value = newIngredientQuantity.toString(),
                 onValueChange = { newIngredientQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0 )},
                 modifier = Modifier.weight(1f).padding(top = 5.dp ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             )
             TextField(
                 value = newIngredientMeasure,
                 onValueChange = { newIngredientMeasure = it },
-                modifier = Modifier.weight(2f).padding(top = 5.dp, end = 5.dp)
+                modifier = Modifier.weight(2f).padding(top = 5.dp, end = 5.dp),
+                placeholder = { Text("measure") },
             )
             Button(
                 onClick = {
