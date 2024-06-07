@@ -171,7 +171,7 @@ internal fun RecipeListScreen(
                             AlertDialog(
                                 onDismissRequest = { openDialog.value = false},
                                 title = { Text("Delete all recipes?") },
-                                confirmButton = {
+                                dismissButton = {
                                     Button(
                                         onClick = { onDelete(); openDialog.value = false },
                                         //openDialog.value = false ,
@@ -183,7 +183,7 @@ internal fun RecipeListScreen(
                                         Text("Delete")
                                     }
                                 },
-                                dismissButton = {
+                                confirmButton = {
                                     Button(
                                         onClick = { openDialog.value = false },
                                         modifier = Modifier.width(116.dp),
@@ -235,8 +235,8 @@ internal fun RecipeListScreen(
                     FloatingActionButton(
                         onClick = { onNavigateToAddScreen() },
                         content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
-                        //TODO Make sth with botton color
-                        //containerColor = FloatingActionButtonDefaults.containerColor,
+                        containerColor = Color.White,
+                        contentColor = Color(0xFF4DB6AC),
                     )
                 },
 

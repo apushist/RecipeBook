@@ -116,6 +116,17 @@ fun RecipeScreen(
                                                 title = { Text("Delete recipe?") },
                                                 confirmButton = {
                                                     Button(
+                                                        onClick = { openDialog.value = false },
+                                                        modifier = Modifier.width(116.dp),
+                                                        shape = RoundedCornerShape(15.dp),
+                                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                                                    ) {
+                                                        Text("Cancel", fontSize = 12.sp)
+                                                    }
+                                                },
+                                                dismissButton = {
+                                                    Button(
                                                         onClick = { viewModel.deleteRecipe(recipe)
                                                             onNavigateToMain(); openDialog.value = false },
                                                         //openDialog.value = false ,
@@ -125,17 +136,6 @@ fun RecipeScreen(
                                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                                     ) {
                                                         Text("Delete")
-                                                    }
-                                                },
-                                                dismissButton = {
-                                                    Button(
-                                                        onClick = { openDialog.value = false },
-                                                        modifier = Modifier.width(116.dp),
-                                                        shape = RoundedCornerShape(15.dp),
-                                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
-                                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
-                                                    ) {
-                                                        Text("Cancel", fontSize = 12.sp)
                                                     }
                                                 },
                                                 containerColor = Color.White,
@@ -161,17 +161,55 @@ fun RecipeScreen(
                         containerColor = Color.White,
                         contentColor = Color.LightGray
                     ){
+                        val openDialog = remember { mutableStateOf(false) }
                         Button(
-                            onClick = { resetViewableIngredients(ingredients = ingredients) },
+                            onClick = { openDialog.value = true },
                             modifier = Modifier
-                                            .width(126.dp)
-                                            .padding(start = 5.dp),
+                                .width(126.dp)
+                                .padding(start = 5.dp),
                             shape = RoundedCornerShape(15.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                             border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
                         ) {
                             Text(text = "Reset")
                         }
+                        if (openDialog.value) {
+                            AlertDialog(
+                                onDismissRequest = { openDialog.value = false},
+                                title = { Text("Reset the ingredients?") },
+                                dismissButton = {
+                                    Button(
+                                        onClick = {
+                                                resetViewableIngredients(ingredients = ingredients)
+                                                onNavigateToMain(); openDialog.value = false
+                                        },
+                                        //openDialog.value = false ,
+                                        modifier = Modifier.width(116.dp),
+                                        shape = RoundedCornerShape(15.dp),
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                                    ) {
+                                        Text("Reset")
+                                    }
+                                },
+                                confirmButton = {
+                                    Button(
+                                        onClick = { openDialog.value = false },
+                                        modifier = Modifier.width(116.dp),
+                                        shape = RoundedCornerShape(15.dp),
+                                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                        border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                                    ) {
+                                        Text("Cancel", fontSize = 12.sp)
+                                    }
+                                },
+                                containerColor = Color.White,
+                                titleContentColor = Color.Black,
+                            )
+                        }
+
+
+
 
                         Spacer(Modifier.weight(1f, true))
 
