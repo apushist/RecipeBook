@@ -52,6 +52,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.res.stringResource
+import com.sfedu.recipebook.R
 
 
 @Composable
@@ -59,6 +61,7 @@ fun RecipeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
     onNavigateToCalc: () -> Unit,
+    onNavigateToChange: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()
 ) {
@@ -76,7 +79,7 @@ fun RecipeScreen(
                         navigationIcon={
                             IconButton(onClick = { onNavigateToMain() }
                             ) {
-                                Icon(Icons.Filled.ArrowBack, contentDescription = "Назад")
+                                Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(id = R.string.back_icon_description))
                             }
                         },
                         actions={
@@ -88,7 +91,7 @@ fun RecipeScreen(
                                     IconButton(
                                         onClick = { expanded = true }
                                     ) {
-                                        Icon(Icons.Filled.MoreVert, contentDescription = "Доп действия")
+                                        Icon(Icons.Filled.MoreVert, contentDescription = stringResource(id = R.string.more_icon_description))
                                     }
                                     DropdownMenu(
                                         expanded = expanded,
@@ -98,10 +101,12 @@ fun RecipeScreen(
                                     ) {
                                         TextButton(
                                             {
+                                                currentRecipe = recipe
+                                                onNavigateToChange()
                                                 // TODO make navigation to ChangeRecipeScreen and add this screen
                                             }
                                         ){
-                                            Text("Change Recipe", color = Color.Black)
+                                            Text(stringResource(id = R.string.change_recipe_button), color = Color.Black)
                                         }
 
                                         val openDialog = remember { mutableStateOf(false) }
@@ -109,12 +114,12 @@ fun RecipeScreen(
                                             { openDialog.value = true },
 
                                         ){
-                                            Text("Delete recipe", color = Color.Black)
+                                            Text(stringResource(id = R.string.delete_recipe_button), color = Color.Black)
                                         }
                                         if (openDialog.value) {
                                             AlertDialog(
                                                 onDismissRequest = { openDialog.value = false},
-                                                title = { Text("Delete recipe?") },
+                                                title = { Text(stringResource(id = R.string.sure_alert)) },
                                                 confirmButton = {
                                                     Button(
                                                         onClick = { openDialog.value = false },
@@ -136,7 +141,7 @@ fun RecipeScreen(
                                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                                     ) {
-                                                        Text("Delete")
+                                                        Text(stringResource(id = R.string.delete_button))
                                                     }
                                                 },
                                                 containerColor = Color.White,

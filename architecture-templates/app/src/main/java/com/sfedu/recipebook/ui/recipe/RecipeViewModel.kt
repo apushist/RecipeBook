@@ -1,21 +1,7 @@
-/*
- * Copyright (C) 2022 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.sfedu.recipebook.ui.recipe
 
+import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,8 +17,8 @@ import com.sfedu.recipebook.data.local.database.Recipe
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Error
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Loading
 import com.sfedu.recipebook.ui.recipe.RecipeUiState.Success
+import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 
 var currentRecipe = Recipe("name",0,"difficulty",
@@ -41,9 +27,10 @@ var currentRecipe = Recipe("name",0,"difficulty",
 var viewableIngredients: MutableList<Triple<String, Double,String>> = ingredientsStringToList(currentRecipe.ingredients)
 
 
+
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository
+    private val recipeRepository: RecipeRepository,
 ) : ViewModel() {
 
     val uiState: StateFlow<RecipeUiState> = recipeRepository
@@ -72,6 +59,38 @@ class RecipeViewModel @Inject constructor(
             ))
                 recipeRepository.add(name,0,difficulty,cookingTime,servingSize,ingredients,recipeSteps)
            // TODO Add imageId сделаем к защите, надеюсь
+
+        }
+    }
+
+    fun updateRecipe(
+        name: String,
+        //imageId: Int,
+        difficulty: String,
+        cookingTime: Int,
+        servingSize: Int,
+        ingredients: String,
+        recipeSteps: String
+    ) {
+        viewModelScope.launch {
+            /*if(checkRecipeCorrectness(
+                    name,
+                    //imageId,
+                    difficulty,
+                    cookingTime,
+                    servingSize,
+                    ingredients,
+                    recipeSteps
+                )){*/
+                currentRecipe.name = name
+                currentRecipe.difficulty = difficulty
+                currentRecipe.cookingTime = cookingTime
+                currentRecipe.servingSize = servingSize
+                currentRecipe.ingredients = ingredients
+                currentRecipe.recipeSteps = recipeSteps
+                recipeRepository.updateRecipe(currentRecipe)
+            //}
+            // TODO Add imageId сделаем к защите, надеюсь
 
         }
     }
@@ -107,7 +126,7 @@ sealed interface RecipeUiState {
 fun ingredientsListToString(ingredientsList:List<Triple<String, Double,String>>):String{
     val sb = StringBuilder()
     for(component in ingredientsList){
-        sb.append("${component.first}:${component.second}:${component.third}").append(";")
+        sb.append("${component.first}:${component.second}:${component.third};")
     }
     return sb.toString()
 }
@@ -138,7 +157,7 @@ fun checkRecipeCorrectness(
     ingredients != "" &&
     recipeSteps != ""
 
-fun round2Characters(number: Double) = (number*100).roundToInt() / 100.0
+fun round2Characters(number: Double) = (number*100) / 100.0
 
 fun ingredientTripleToString(ingredient:Triple<String, Double,String>): String{
     return "${ingredient.first} ${ingredient.second} ${ingredient.third}"
@@ -156,4 +175,17 @@ fun changeViewableIngredients(multiplier: Double){
 fun resetViewableIngredients(ingredients: MutableState<MutableList<Triple<String, Double, String>>>) {
     ingredients.value = ingredientsStringToList(currentRecipe.ingredients)
     viewableIngredients = ingredientsStringToList(currentRecipe.ingredients)
+}
+
+fun setLocale(language: String, context: Context){
+    val locale = Locale(language)
+    Locale.setDefault(locale)
+
+    val resources = context.resources
+
+    val configuration = Configuration()
+    configuration.setLocale(locale)
+    configuration.setLayoutDirection(locale)
+
+    resources.updateConfiguration(configuration, resources.displayMetrics)
 }

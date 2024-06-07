@@ -1,21 +1,6 @@
-/*
- * Copyright (C) 2022 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.sfedu.recipebook.ui.recipe
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -80,12 +65,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.runtime.setValue
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.res.stringResource
+import com.sfedu.recipebook.R
 
 
 @Composable
 fun RecipeListScreen(
     onNavigateToAddScreen: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
+    context: Context,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()
 ) {
@@ -96,6 +84,7 @@ fun RecipeListScreen(
             onNavigateToRecipeView = onNavigateToRecipeView,
             onDelete = viewModel::deleteAll,
             recipes = (items as RecipeUiState.Success).data,
+            context = context,
             modifier = modifier
         )
     }
@@ -109,6 +98,7 @@ internal fun RecipeListScreen(
     onNavigateToRecipeView: () -> Unit,
     recipes: List<Recipe>,
     onDelete: () -> Unit,
+    context: Context,
     modifier: Modifier = Modifier
 ) {
     var drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -130,7 +120,7 @@ internal fun RecipeListScreen(
                         modifier = Modifier//.fillMaxHeight()
                                             .clickable(onClick = { expanded = true })
                     ) {
-                        Text("Change language")
+                        Text(stringResource(id = R.string.change_language_button))
 
                         DropdownMenu(
                             expanded = expanded,
@@ -138,14 +128,17 @@ internal fun RecipeListScreen(
                         ) {
                             DropdownMenuItem(
                                 onClick = { // TODO add a Russian translation
+                                          setLocale("ru", context = context)
                                      },
-                                text = { Text("Russian") }
+                                text = { Text(stringResource(id = R.string.russian_button)) }
                             )
 
                             DropdownMenuItem(
                                 onClick = { // TODO add an English translation
+                                    setLocale("en", context = context)
+
                                       },
-                                text = { Text("English") }
+                                text = { Text(stringResource(id = R.string.english_button)) }
                             )
                         }
 
@@ -165,12 +158,12 @@ internal fun RecipeListScreen(
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                             border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                         ) {
-                            Text("Delete all recipes")
+                            Text(stringResource(id = R.string.delete_all_recipes_button))
                         }
                         if (openDialog.value) {
                             AlertDialog(
                                 onDismissRequest = { openDialog.value = false},
-                                title = { Text("Delete all recipes?") },
+                                title = { Text(stringResource(id = R.string.sure_alert)) },
                                 dismissButton = {
                                     Button(
                                         onClick = { onDelete(); openDialog.value = false },
@@ -180,7 +173,7 @@ internal fun RecipeListScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                     ) {
-                                        Text("Delete")
+                                        Text(stringResource(id = R.string.delete_button))
                                     }
                                 },
                                 confirmButton = {
@@ -191,7 +184,7 @@ internal fun RecipeListScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                     ) {
-                                        Text("Cancel")
+                                        Text(stringResource(id = R.string.cancel_button), fontSize = 12.sp)
                                     }
                                 },
                                 containerColor = Color.White,
@@ -207,18 +200,18 @@ internal fun RecipeListScreen(
                 topBar = {
                     @OptIn(ExperimentalMaterial3Api::class)
                     TopAppBar(
-                        title = { Text("RecipeBook", fontSize = 22.sp) },
+                        title = { Text(stringResource(id = R.string.app_name), fontSize = 22.sp) },
 
                         navigationIcon = {
                             IconButton(onClick = { scope.launch {drawerState.open() }}) {
-                                Icon(Icons.Filled.Menu, contentDescription = "Меню")
+                                Icon(Icons.Filled.Menu, contentDescription = stringResource(id = R.string.menu_icon_description))
                             }
                         },
 
                         actions ={
                             IconButton( onClick = { }
                             ) {
-                                Icon(Icons.Filled.Search, contentDescription = "Поиск")
+                                Icon(Icons.Filled.Search, contentDescription = stringResource(id = R.string.search_icon_description))
                             }
                         },
 
@@ -234,7 +227,7 @@ internal fun RecipeListScreen(
                 floatingActionButton = {
                     FloatingActionButton(
                         onClick = { onNavigateToAddScreen() },
-                        content = { Icon(Icons.Filled.Add, contentDescription = "Добавить") },
+                        content = { Icon(Icons.Filled.Add, contentDescription = stringResource(id = R.string.add_icon_description)) },
                         containerColor = Color.White,
                         contentColor = Color(0xFF4DB6AC),
                     )
