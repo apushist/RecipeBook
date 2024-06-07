@@ -45,11 +45,13 @@ import com.sfedu.recipebook.R
 fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
+    onNavigateToChange: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()) {
     RecipeChangeScreen(
         onNavigateToMain = onNavigateToMain,
         onNavigateToRecipeView = onNavigateToRecipeView,
+        onNavigateToChange = onNavigateToChange,
         onUpdate = viewModel::updateRecipe,
         modifier = modifier
     )
@@ -60,6 +62,7 @@ fun RecipeChangeScreen(
 internal fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
+    onNavigateToChange: () -> Unit,
     onUpdate: KFunction6<String, String, Int, Int, String, String, Unit>,
     modifier: Modifier = Modifier
 ) {
@@ -212,7 +215,7 @@ internal fun RecipeChangeScreen(
 
                             Button(onClick = {
                                 changeViewableIngredients(multiplier)
-                                onNavigateToRecipeView()
+                                onNavigateToChange()
                             },
                                 modifier = Modifier.width(116.dp),
                                 shape = RoundedCornerShape(15.dp),
