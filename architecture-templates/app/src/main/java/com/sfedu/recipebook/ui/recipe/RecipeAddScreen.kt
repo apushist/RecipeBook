@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
@@ -72,6 +73,13 @@ internal fun RecipeAddScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 5.dp, end = 5.dp),
                 placeholder = { Text(stringResource(id = R.string.recipe_name_text_field)) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -83,6 +91,13 @@ internal fun RecipeAddScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
                 placeholder = { Text(stringResource(id = R.string.difficulty_text_field)) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -99,7 +114,13 @@ internal fun RecipeAddScreen(
                     keyboardType = KeyboardType.Number,
                 ),
                 placeholder = { Text(stringResource(id = R.string.cooking_time_text_field)) },
-
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -114,10 +135,15 @@ internal fun RecipeAddScreen(
                     .padding(start = 5.dp, end = 5.dp),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
-                )
-                ,
+                ),
                 placeholder = { Text(stringResource(id = R.string.serving_size_text_field)) },
-
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -133,6 +159,13 @@ internal fun RecipeAddScreen(
                 modifier = Modifier.fillMaxWidth().padding( start = 5.dp, end = 5.dp),
                 onValueChange = { recipeSteps = it },
                 placeholder = { Text(stringResource(id = R.string.recipe_steps_text_field)) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -180,6 +213,13 @@ fun IngredientList(
                 onValueChange = { newIngredientName = it },
                 modifier = Modifier.fillMaxWidth().padding(  end = 5.dp),
                 placeholder = { Text( stringResource(id = R.string.ingredient_name_text_field)) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -191,12 +231,26 @@ fun IngredientList(
                 onValueChange = { newIngredientQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0 )},
                 modifier = Modifier.weight(1f).padding(top = 5.dp ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
             TextField(
                 value = newIngredientMeasure,
                 onValueChange = { newIngredientMeasure = it },
                 modifier = Modifier.weight(2f).padding(top = 5.dp, end = 5.dp),
                 placeholder = { Text(stringResource(id = R.string.ingredient_measure_text_field)) },
+                colors = TextFieldDefaults.colors(
+                    unfocusedContainerColor = Color(0xFFE1E2EC),
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFE1E2EC),
+                    focusedTextColor = Color.Black,
+                    focusedIndicatorColor = Color(0xFF4DB6AC),
+                ),
             )
             Button(
                 onClick = {
