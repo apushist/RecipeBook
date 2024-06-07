@@ -245,7 +245,7 @@ internal fun RecipeListScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 24.dp)
+                            .padding(bottom = 70.dp)
                     ) {
                         LazyColumn(
                             modifier = Modifier.padding(10.dp)

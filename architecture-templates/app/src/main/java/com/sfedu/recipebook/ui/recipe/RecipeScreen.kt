@@ -103,7 +103,6 @@ fun RecipeScreen(
                                             {
                                                 currentRecipe = recipe
                                                 onNavigateToChange()
-                                                // TODO make navigation to ChangeRecipeScreen and add this screen
                                             }
                                         ){
                                             Text(stringResource(id = R.string.change_recipe_button), color = Color.Black)
@@ -155,7 +154,6 @@ fun RecipeScreen(
 
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Color.White,
-                            //titleContentColor = Color.Black,
                             navigationIconContentColor = Color(0xFF4DB6AC),
                             actionIconContentColor = Color(0xFF4DB6AC)
                         )
@@ -189,7 +187,6 @@ fun RecipeScreen(
                                                 resetViewableIngredients(ingredients = ingredients)
                                                 onNavigateToRecipeView(); openDialog.value = false
                                         },
-                                        //openDialog.value = false ,
                                         modifier = Modifier.width(116.dp),
                                         shape = RoundedCornerShape(15.dp),
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
@@ -284,7 +281,6 @@ fun RecipeScreen(
                                             modifier = Modifier
                                                         .fillMaxWidth()
                                                         .background(Color(0xFFB2DFDB))
-                                                        //.padding(0.dp, 0.dp, 0.dp, 0.dp)
                                                         .height(2.dp),
                                         )
                                     }
