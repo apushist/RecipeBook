@@ -1,6 +1,8 @@
 package com.sfedu.recipebook.ui.recipe
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,12 +19,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -35,8 +40,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextIndent
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlin.reflect.KFunction6
 import com.sfedu.recipebook.R
@@ -206,15 +215,16 @@ internal fun RecipeChangeScreen(
                             )
                         Spacer(modifier = Modifier.height(5.dp))
 
-                        val multiplier = IngredientsDropdownMenu()
+                        val multiplier = ChangeIngredientsDropdownMenu()
 
                         Row(
                             modifier = Modifier.padding(start = 5.dp, end = 5.dp)
                         ) {
                             Spacer(modifier = Modifier.weight(2f,true))
 
+                            //todo add button + delete button
                             Button(onClick = {
-                                changeViewableIngredients(multiplier)
+                                //changeViewableIngredients(multiplier) todo saving
                                 onNavigateToChange()
                             },
                                 modifier = Modifier.width(116.dp),
@@ -253,4 +263,98 @@ internal fun RecipeChangeScreen(
     }
 }
 
+@Composable
+fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
+    val expanded = remember { mutableStateOf(false) }
+    val selectedItem = remember { mutableStateOf(viewableIngredients[0]) }
+    var selectedItemQuantity by remember { mutableDoubleStateOf(selectedItem.value.second) }
 
+    Box {
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            offset = DpOffset(0.dp, 43.dp)
+        ) {
+            viewableIngredients.forEach { item ->
+                DropdownMenuItem(
+                    { Text(text = item.first)},
+                    onClick = {
+                        selectedItem.value = item
+                        selectedItemQuantity = item.second
+                        expanded.value = false
+                    }
+                )
+            }
+        }
+    }
+    var ingredientName by remember { mutableStateOf("") }
+    var ingredientMeasure by remember { mutableStateOf("") }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFB2DFDB))
+            .padding(0.dp, 10.dp, 0.dp, 10.dp)
+            .clickable { expanded.value = true }
+    ) {
+        TextField (
+            value = selectedItem.value.first,
+            onValueChange = { ingredientName = it },
+            placeholder = { Text( stringResource(id = R.string.ingredient_name_text_field)) },
+
+            modifier = Modifier
+                .height(30.dp)
+                .background(Color(0xFFB2DFDB)),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFE1E2EC),
+                unfocusedTextColor = Color.Black,
+                focusedContainerColor = Color(0xFFE1E2EC),
+                focusedTextColor = Color.Black,
+                focusedIndicatorColor = Color(0xFF4DB6AC),
+            ),
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFE1E2EC))
+            .clickable { expanded.value = true }
+    ) {
+        TextField(
+            value = selectedItemQuantity.toString(),
+            onValueChange = { selectedItemQuantity = round2Characters(it.toDoubleOrNull() ?: selectedItem.value.second) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier
+                .weight(1f)
+                .background(Color(0xFFE6E6FA))
+            ,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFE1E2EC),
+                unfocusedTextColor = Color.Black,
+                focusedContainerColor = Color(0xFFE1E2EC),
+                focusedTextColor = Color.Black,
+                focusedIndicatorColor = Color(0xFF4DB6AC),
+            ),
+        )
+        TextField (
+            value = selectedItem.value.third,
+            onValueChange = { ingredientMeasure = it },
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 10.dp)
+                .padding(start = 10.dp)
+                .background(Color(0xFFE1E2EC))
+            ,
+            placeholder = { Text(stringResource(id = R.string.ingredient_measure_text_field)) },
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFE1E2EC),
+                unfocusedTextColor = Color.Black,
+                focusedContainerColor = Color(0xFFE1E2EC),
+                focusedTextColor = Color.Black,
+                focusedIndicatorColor = Color(0xFF4DB6AC),
+            ),
+            )
+    }
+    return Triple(ingredientName,selectedItemQuantity,ingredientMeasure)
+}
