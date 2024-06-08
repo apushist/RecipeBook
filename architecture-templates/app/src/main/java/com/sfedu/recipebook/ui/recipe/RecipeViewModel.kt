@@ -26,7 +26,12 @@ var currentRecipe = Recipe("name",0,"difficulty",
 
 var viewableIngredients: MutableList<Triple<String, Double,String>> = ingredientsStringToList(currentRecipe.ingredients)
 
-
+data class Quadruple<out A, out B, out C, out D>(
+    val first: A,
+    val second: B,
+    val third: C,
+    val fourth: D
+)
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
@@ -73,7 +78,7 @@ class RecipeViewModel @Inject constructor(
         recipeSteps: String
     ) {
         viewModelScope.launch {
-            /*if(checkRecipeCorrectness(
+            if(checkRecipeCorrectness(
                     name,
                     //imageId,
                     difficulty,
@@ -81,7 +86,7 @@ class RecipeViewModel @Inject constructor(
                     servingSize,
                     ingredients,
                     recipeSteps
-                )){*/
+                )){
                 currentRecipe.name = name
                 currentRecipe.difficulty = difficulty
                 currentRecipe.cookingTime = cookingTime
@@ -89,8 +94,7 @@ class RecipeViewModel @Inject constructor(
                 currentRecipe.ingredients = ingredients
                 currentRecipe.recipeSteps = recipeSteps
                 recipeRepository.updateRecipe(currentRecipe)
-            //}
-            // TODO Add imageId сделаем к защите, надеюсь
+            }
 
         }
     }
@@ -160,7 +164,7 @@ fun checkRecipeCorrectness(
 fun round2Characters(number: Double) = (number*100) / 100.0
 
 fun ingredientTripleToString(ingredient:Triple<String, Double,String>): String{
-    return "${ingredient.first} ${ingredient.second} ${ingredient.third}"
+    return "${ingredient.first} ${round2Characters(ingredient.second)} ${ingredient.third}"
 }
 
 fun changeViewableIngredients(multiplier: Double){

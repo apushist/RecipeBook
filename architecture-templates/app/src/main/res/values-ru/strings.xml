@@ -4,10 +4,9 @@
     <string name="app_name">Книга рецептов</string>
     <string name="change_recipe_button">Изменить рецепт</string>
     <string name="delete_recipe_button">Удалить рецепт</string>
-    <string name="sure_alert">Вы уверены?</string>
     <string name="delete_button">Удалить</string>
     <string name="cancel_button">Отмена</string>
-    <string name="recalculate_ingredients_button">Пересчитать ингредиенты</string>
+    <string name="recalculate_ingredients_button">Пересчитать</string>
     <string name="reset_ingredients_button">Сброс</string>
     <string name="change_language_button">Изменить язык</string>
     <string name="russian_button">Русский</string>
@@ -29,5 +28,11 @@
     <string name="serving_size_text_field">Количество порций</string>
     <string name="save_button">Сохранить</string>
     <string name="ingredient_quantity_text_field">Количество</string>
+    <string name="ingredients_title">Ингредиенты</string>
+    <string name="steps_title">Приготовление</string>
+    <string name="reset_ingredients_alert">Сбросить игредиенты?</string>
+    <string name="delete_all_recipes_alert">Удалить все рецепты?</string>
+    <string name="delete_recipe_alert">Удалить рецепт?</string>
+
 
 </resources>

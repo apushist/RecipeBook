@@ -4,15 +4,16 @@
     <string name="app_name">RecipeBook</string>
     <string name="change_recipe_button">Change Recipe</string>
     <string name="delete_recipe_button">Delete recipe</string>
-    <string name="sure_alert">Are you sure?</string>
+    <string name="delete_recipe_alert">Delete recipe?</string>
     <string name="delete_button">Delete</string>
     <string name="cancel_button">Cancel</string>
-    <string name="recalculate_ingredients_button">Recalculate ingredients</string>
+    <string name="recalculate_ingredients_button">Recalculate</string>
     <string name="reset_ingredients_button">Reset</string>
     <string name="change_language_button">Change language</string>
     <string name="russian_button">Russian</string>
     <string name="english_button">English</string>
     <string name="delete_all_recipes_button">Delete all recipes</string>
+    <string name="delete_all_recipes_alert">Delete all recipes?</string>
     <string name="back_icon_description">Back</string>
     <string name="more_icon_description">Additional actions</string>
     <string name="menu_icon_description">Menu</string>
@@ -29,5 +30,9 @@
     <string name="serving_size_text_field">Serving size</string>
     <string name="save_button">Save</string>
     <string name="ingredient_quantity_text_field">Quantity</string>
+    <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
+    <string name="reset_ingredients_alert">Reset the ingredients?</string>
+
 
 </resources>

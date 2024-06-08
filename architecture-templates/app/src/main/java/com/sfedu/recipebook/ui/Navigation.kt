@@ -55,7 +55,7 @@ fun MainNavigation(context: Context) {
             RecipeChangeScreen(
                 onNavigateToMain = { navController.navigate("main") },
                 onNavigateToRecipeView = { navController.navigate("recipeView") },
-                onNavigateToChange = { navController.navigate("changeScreen") },
+
                 modifier = Modifier.padding(16.dp)
             )
         }

@@ -102,6 +102,8 @@ fun RecipeScreen(
                                         TextButton(
                                             {
                                                 currentRecipe = recipe
+                                                resetViewableIngredients(ingredients = ingredients)
+
                                                 onNavigateToChange()
                                             }
                                         ){
@@ -118,7 +120,7 @@ fun RecipeScreen(
                                         if (openDialog.value) {
                                             AlertDialog(
                                                 onDismissRequest = { openDialog.value = false},
-                                                title = { Text(stringResource(id = R.string.sure_alert)) },
+                                                title = { Text(stringResource(id = R.string.delete_recipe_alert)) },
                                                 confirmButton = {
                                                     Button(
                                                         onClick = { openDialog.value = false },
@@ -127,7 +129,7 @@ fun RecipeScreen(
                                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                                     ) {
-                                                        Text("Cancel")
+                                                        Text(stringResource(id = R.string.cancel_button))
                                                     }
                                                 },
                                                 dismissButton = {
@@ -175,12 +177,12 @@ fun RecipeScreen(
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                             border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
                         ) {
-                            Text(text = "Reset")
+                            Text(text = stringResource(id = R.string.reset_ingredients_button))
                         }
                         if (openDialog.value) {
                             AlertDialog(
                                 onDismissRequest = { openDialog.value = false},
-                                title = { Text("Reset the ingredients?") },
+                                title = { Text(stringResource(id = R.string.reset_ingredients_alert)) },
                                 dismissButton = {
                                     Button(
                                         onClick = {
@@ -192,7 +194,7 @@ fun RecipeScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                     ) {
-                                        Text("Reset")
+                                        Text(stringResource(id = R.string.reset_ingredients_button))
                                     }
                                 },
                                 confirmButton = {
@@ -203,7 +205,7 @@ fun RecipeScreen(
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
                                     ) {
-                                        Text("Cancel")
+                                        Text(stringResource(id = R.string.cancel_button))
                                     }
                                 },
                                 containerColor = Color.White,
@@ -221,13 +223,13 @@ fun RecipeScreen(
                             onNavigateToCalc() },
 
                             modifier = Modifier
-                                            .width(126.dp)
-                                            .padding(end = 5.dp),
+                                .width(126.dp)
+                                .padding(end = 5.dp),
                             shape = RoundedCornerShape(15.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                             border = BorderStroke(2.dp, Color(0xFF4DB6AC)),
                         ) {
-                            Text(text = "Recalculate")
+                            Text(text = stringResource(id = R.string.recalculate_ingredients_button))
                         }
                     }
                 },
@@ -269,7 +271,7 @@ fun RecipeScreen(
                                     modifier = Modifier.padding(10.dp, 10.dp, 0.dp, 0.dp)
                                 ){
                                     Text(
-                                        text = "Ingredients",
+                                        text = stringResource(id = R.string.ingredients_title),
                                     )
                                     Box (
                                         modifier = Modifier
@@ -307,7 +309,7 @@ fun RecipeScreen(
                                     modifier = Modifier.padding(10.dp, 10.dp, 0.dp, 0.dp)
                                 ){
                                     Text(
-                                        text = "Steps",
+                                        text = stringResource(id = R.string.steps_title),
                                     )
                                     Box (
                                         modifier = Modifier

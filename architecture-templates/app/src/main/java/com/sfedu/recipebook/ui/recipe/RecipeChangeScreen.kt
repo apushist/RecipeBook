@@ -49,18 +49,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlin.reflect.KFunction6
 import com.sfedu.recipebook.R
+import java.io.Serializable
 
 @Composable
 fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
-    onNavigateToChange: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RecipeViewModel = hiltViewModel()) {
     RecipeChangeScreen(
         onNavigateToMain = onNavigateToMain,
         onNavigateToRecipeView = onNavigateToRecipeView,
-        onNavigateToChange = onNavigateToChange,
         onUpdate = viewModel::updateRecipe,
         modifier = modifier
     )
@@ -71,7 +70,6 @@ fun RecipeChangeScreen(
 internal fun RecipeChangeScreen(
     onNavigateToMain: () -> Unit,
     onNavigateToRecipeView: () -> Unit,
-    onNavigateToChange: () -> Unit,
     onUpdate: KFunction6<String, String, Int, Int, String, String, Unit>,
     modifier: Modifier = Modifier
 ) {
@@ -79,7 +77,6 @@ internal fun RecipeChangeScreen(
     var difficulty by remember { mutableStateOf(currentRecipe.difficulty) }
     var cookingTime by remember { mutableStateOf(currentRecipe.cookingTime) }
     var servingSize by remember { mutableStateOf(currentRecipe.servingSize) }
-    var ingredients by remember { mutableStateOf(currentRecipe.ingredients) }
     var recipeSteps by remember { mutableStateOf(currentRecipe.recipeSteps) }
     //var imageRecipe by remember { mutableStateOf(0) }
 
@@ -107,7 +104,7 @@ internal fun RecipeChangeScreen(
                                         difficulty,
                                         cookingTime,//.toIntOrNull() ?: 0,
                                         servingSize,//.toIntOrNull() ?: 0,
-                                        ingredients,
+                                        ingredientsListToString(viewableIngredients),
                                         recipeSteps
                                     )
                                     onNavigateToRecipeView()
@@ -215,17 +212,15 @@ internal fun RecipeChangeScreen(
                             )
                         Spacer(modifier = Modifier.height(5.dp))
 
-                        val multiplier = ChangeIngredientsDropdownMenu()
+                        val ingredient = ChangeIngredientsDropdownMenu()
 
                         Row(
                             modifier = Modifier.padding(start = 5.dp, end = 5.dp)
                         ) {
                             Spacer(modifier = Modifier.weight(2f,true))
 
-                            //todo add button + delete button
                             Button(onClick = {
-                                //changeViewableIngredients(multiplier) todo saving
-                                onNavigateToChange()
+                                viewableIngredients[ingredient.first] = Triple(ingredient.second,ingredient.third,ingredient.fourth)
                             },
                                 modifier = Modifier.width(116.dp),
                                 shape = RoundedCornerShape(15.dp),
@@ -236,12 +231,32 @@ internal fun RecipeChangeScreen(
                                     text = stringResource(id = R.string.save_button)
                                 )
                             }
+                            Button(onClick = {
+                                viewableIngredients.add(Triple(ingredient.second,ingredient.third,ingredient.fourth))
+                            },
+                                modifier = Modifier.width(116.dp),
+                                shape = RoundedCornerShape(15.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.add_icon_description)
+                                )
+                            }
+                            Button(onClick = {
+                                viewableIngredients.removeAt(ingredient.first)
+                            },
+                                modifier = Modifier.width(116.dp),
+                                shape = RoundedCornerShape(15.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
+                                border = BorderStroke(2.dp, Color(0xFF4DB6AC))
+                            ) {
+                                Text(
+                                    text =  stringResource(id = R.string.delete_button)
+                                )
+                            }
                         }
 
-                        ingredients = ingredientsListToString(IngredientList(
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(start = 5.dp)))
 
                         Spacer(modifier = Modifier.height(5.dp))
 
@@ -264,10 +279,12 @@ internal fun RecipeChangeScreen(
 }
 
 @Composable
-fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
+fun ChangeIngredientsDropdownMenu(): Quadruple<Int,String, Double,String> {
     val expanded = remember { mutableStateOf(false) }
-    val selectedItem = remember { mutableStateOf(viewableIngredients[0]) }
-    var selectedItemQuantity by remember { mutableDoubleStateOf(selectedItem.value.second) }
+    var selectedItemName = remember { mutableStateOf(viewableIngredients[0].first) }
+    var selectedItemQuantity by remember { mutableDoubleStateOf(viewableIngredients[0].second) }
+    var selectedItemMeasure = remember { mutableStateOf(viewableIngredients[0].third) }
+    var selectedItemIndex by remember { mutableIntStateOf(0) }
 
     Box {
         DropdownMenu(
@@ -275,20 +292,20 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
             onDismissRequest = { expanded.value = false },
             offset = DpOffset(0.dp, 43.dp)
         ) {
-            viewableIngredients.forEach { item ->
+            viewableIngredients.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     { Text(text = item.first)},
                     onClick = {
-                        selectedItem.value = item
+                        selectedItemName.value = item.first
                         selectedItemQuantity = item.second
+                        selectedItemMeasure.value = item.third
                         expanded.value = false
+                        selectedItemIndex = index
                     }
                 )
             }
         }
     }
-    var ingredientName by remember { mutableStateOf("") }
-    var ingredientMeasure by remember { mutableStateOf("") }
 
     Row(
         modifier = Modifier
@@ -298,10 +315,10 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
             .clickable { expanded.value = true }
     ) {
         TextField (
-            value = selectedItem.value.first,
-            onValueChange = { ingredientName = it },
+            value = selectedItemName.value,
+            onValueChange = { selectedItemName.value = it },
             placeholder = { Text( stringResource(id = R.string.ingredient_name_text_field)) },
-
+            /*textStyle = TextStyle(textIndent = TextIndent(10.sp, 5.sp), fontSize = 26.sp,),
             modifier = Modifier
                 .height(30.dp)
                 .background(Color(0xFFB2DFDB)),
@@ -311,7 +328,7 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
                 focusedContainerColor = Color(0xFFE1E2EC),
                 focusedTextColor = Color.Black,
                 focusedIndicatorColor = Color(0xFF4DB6AC),
-            ),
+            ),*/ //todo закомментила потому что оно не отображается нормально, надеюсь ты разберешься
         )
     }
 
@@ -323,7 +340,7 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
     ) {
         TextField(
             value = selectedItemQuantity.toString(),
-            onValueChange = { selectedItemQuantity = round2Characters(it.toDoubleOrNull() ?: selectedItem.value.second) },
+            onValueChange = { selectedItemQuantity = round2Characters(it.toDoubleOrNull() ?: 0.0) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier
                 .weight(1f)
@@ -338,8 +355,8 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
             ),
         )
         TextField (
-            value = selectedItem.value.third,
-            onValueChange = { ingredientMeasure = it },
+            value = selectedItemMeasure.value,
+            onValueChange = { selectedItemMeasure.value = it },
             modifier = Modifier
                 .weight(1f)
                 .padding(vertical = 10.dp)
@@ -356,5 +373,5 @@ fun ChangeIngredientsDropdownMenu():Triple<String, Double,String> {
             ),
             )
     }
-    return Triple(ingredientName,selectedItemQuantity,ingredientMeasure)
+    return Quadruple(selectedItemIndex,selectedItemName.value,selectedItemQuantity,selectedItemMeasure.value)
 }

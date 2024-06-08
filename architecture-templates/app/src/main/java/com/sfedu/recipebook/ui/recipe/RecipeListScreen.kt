@@ -163,7 +163,7 @@ internal fun RecipeListScreen(
                         if (openDialog.value) {
                             AlertDialog(
                                 onDismissRequest = { openDialog.value = false},
-                                title = { Text(stringResource(id = R.string.sure_alert)) },
+                                title = { Text(stringResource(id = R.string.delete_all_recipes_alert)) },
                                 dismissButton = {
                                     Button(
                                         onClick = { onDelete(); openDialog.value = false },
