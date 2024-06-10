@@ -85,6 +85,7 @@ fun CalculateIngredientsScreen(
             modifier = Modifier
                             .fillMaxSize()
                             .padding(it)
+                            .background(Color.White)
         ) {
             Column {
                 LazyColumn(modifier) {
@@ -100,7 +101,7 @@ fun CalculateIngredientsScreen(
                                 changeViewableIngredients(multiplier)
                                 onNavigateToRecipeView()
                             },
-                                modifier = Modifier.width(116.dp),
+                                modifier = Modifier.width(140.dp),
                                 shape = RoundedCornerShape(15.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                 border = BorderStroke(2.dp, Color(0xFF4DB6AC))

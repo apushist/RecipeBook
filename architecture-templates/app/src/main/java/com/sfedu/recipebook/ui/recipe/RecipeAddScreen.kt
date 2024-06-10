@@ -110,7 +110,7 @@ internal fun RecipeAddScreen(
                                     onNavigateToMain()
                                 },
                                 modifier = Modifier
-                                    .width(116.dp)
+                                    .width(140.dp)
                                     .padding(start = 5.dp, end = 5.dp),
                                 shape = RoundedCornerShape(15.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
@@ -134,7 +134,7 @@ internal fun RecipeAddScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                //.background(Color(0xFFE0F2F1)),
+                .background(Color.White),
         ) {
             Column(
                 modifier = Modifier
@@ -329,7 +329,7 @@ fun IngredientList(
                     newIngredientMeasure = ""
                 },
                 modifier = Modifier
-                    .width(116.dp)
+                    .width(140.dp)
                     .padding(top = 10.dp, end = 5.dp),
                 shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),

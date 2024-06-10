@@ -33,6 +33,8 @@
     <string name="ingredients_title">Ingredients</string>
     <string name="steps_title">Steps</string>
     <string name="reset_ingredients_alert">Reset the ingredients?</string>
+    <string name="change_ingredient_field">Change ingredient</string>
+    <string name="add_ingredient_field">Cooking time</string>
 
 
 </resources>

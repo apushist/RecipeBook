@@ -33,6 +33,7 @@
     <string name="reset_ingredients_alert">Сбросить игредиенты?</string>
     <string name="delete_all_recipes_alert">Удалить все рецепты?</string>
     <string name="delete_recipe_alert">Удалить рецепт?</string>
-
+    <string name="change_ingredient_field">Изменить ингредиент</string>
+    <string name="add_ingredient_field">Добавить ингредиент</string>
 
 </resources>

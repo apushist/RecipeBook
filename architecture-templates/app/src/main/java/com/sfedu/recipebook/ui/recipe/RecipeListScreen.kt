@@ -164,11 +164,11 @@ internal fun RecipeListScreen(
                             AlertDialog(
                                 onDismissRequest = { openDialog.value = false},
                                 title = { Text(stringResource(id = R.string.delete_all_recipes_alert)) },
-                                dismissButton = {
+                                confirmButton  = {
                                     Button(
                                         onClick = { onDelete(); openDialog.value = false },
                                         //openDialog.value = false ,
-                                        modifier = Modifier.width(116.dp),
+                                        modifier = Modifier.width(126.dp),
                                         shape = RoundedCornerShape(15.dp),
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
@@ -176,10 +176,11 @@ internal fun RecipeListScreen(
                                         Text(stringResource(id = R.string.delete_button))
                                     }
                                 },
-                                confirmButton = {
+
+                                dismissButton = {
                                     Button(
                                         onClick = { openDialog.value = false },
-                                        modifier = Modifier.width(116.dp),
+                                        modifier = Modifier.width(126.dp),
                                         shape = RoundedCornerShape(15.dp),
                                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE0F2F1), contentColor = Color.Black),
                                         border = BorderStroke(2.dp, Color(0xFF4DB6AC))
