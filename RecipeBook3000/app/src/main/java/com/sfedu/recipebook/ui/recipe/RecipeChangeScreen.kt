@@ -369,7 +369,7 @@ fun ChangeIngredientsDropdownMenu(): Quadruple<Int,String, Double,String> {
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
             offset = DpOffset(5.dp, 45.dp),
-            modifier = Modifier
+            modifier = Modifier.background(Color.White),
                 //.fillMaxWidth()
                 //.padding(start = 5.dp, end = 10.dp),
         ) {
