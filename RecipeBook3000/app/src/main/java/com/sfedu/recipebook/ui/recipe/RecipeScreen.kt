@@ -268,6 +268,41 @@ fun RecipeScreen(
                             }
                             item {
                                 Row (
+                                    modifier = Modifier.padding(10.dp, 3.dp, 0.dp, 0.dp)
+                                ){
+                                    Text(
+                                        text = stringResource(id = R.string.cooking_time_text_field),
+                                    )
+                                    Text( text = ": ")
+                                    Text(
+                                        text = recipe.cookingTime.toString(),
+                                    )
+                                }
+                                Row (
+                                    modifier = Modifier.padding(10.dp, 3.dp, 0.dp, 0.dp)
+                                ){
+                                    Text(
+                                        text = stringResource(id = R.string.difficulty_text_field),
+                                    )
+                                    Text( text = ": ")
+                                    Text(
+                                        text = recipe.difficulty,
+                                    )
+                                }
+                                Row (
+                                    modifier = Modifier.padding(10.dp, 3.dp, 0.dp, 0.dp)
+                                ){
+                                    Text(
+                                        text = stringResource(id = R.string.serving_size_text_field),
+                                    )
+                                    Text( text = ": ")
+                                    Text(
+                                        text = recipe.servingSize.toString(),
+                                    )
+                                }
+                            }
+                            item {
+                                Row (
                                     modifier = Modifier.padding(10.dp, 10.dp, 0.dp, 0.dp)
                                 ){
                                     Text(

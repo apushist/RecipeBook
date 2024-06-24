@@ -24,7 +24,7 @@
     <string name="recipe_steps_text_field">Шаги рецепта</string>
     <string name="return_button">Вернуться</string>
     <string name="calculate_button">Рассчитать</string>
-    <string name="cooking_time_text_field">Время приготовления</string>
+    <string name="cooking_time_text_field">Время приготовления(минуты)</string>
     <string name="serving_size_text_field">Количество порций</string>
     <string name="save_button">Сохранить</string>
     <string name="ingredient_quantity_text_field">Количество</string>
