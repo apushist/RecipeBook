@@ -115,37 +115,37 @@ internal fun RecipeListScreen(
                 ) {
                     var expanded by remember { mutableStateOf(false)}
 
+//                    Box(
+//                        contentAlignment = Alignment.TopStart,
+//                        modifier = Modifier//.fillMaxHeight()
+//                                            .clickable(onClick = { expanded = true })
+//                    ) {
+//                        Text(stringResource(id = R.string.change_language_button))
+//
+//                        DropdownMenu(
+//                            expanded = expanded,
+//                            onDismissRequest = { expanded = false },
+//                        ) {
+//                            DropdownMenuItem(
+//                                onClick = { // TODO add a Russian translation
+//                                          setLocale("ru", context = context)
+//                                     },
+//                                text = { Text(stringResource(id = R.string.russian_button)) }
+//                            )
+//
+//                            DropdownMenuItem(
+//                                onClick = { // TODO add an English translation
+//                                    setLocale("en", context = context)
+//
+//                                      },
+//                                text = { Text(stringResource(id = R.string.english_button)) }
+//                            )
+//                        }
+//
+//                    }
+
                     Box(
-                        contentAlignment = Alignment.TopStart,
-                        modifier = Modifier//.fillMaxHeight()
-                                            .clickable(onClick = { expanded = true })
-                    ) {
-                        Text(stringResource(id = R.string.change_language_button))
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                        ) {
-                            DropdownMenuItem(
-                                onClick = { // TODO add a Russian translation
-                                          setLocale("ru", context = context)
-                                     },
-                                text = { Text(stringResource(id = R.string.russian_button)) }
-                            )
-
-                            DropdownMenuItem(
-                                onClick = { // TODO add an English translation
-                                    setLocale("en", context = context)
-
-                                      },
-                                text = { Text(stringResource(id = R.string.english_button)) }
-                            )
-                        }
-
-                    }
-
-                    Box(
-                        contentAlignment = Alignment.BottomStart,
+                        contentAlignment = Alignment.TopStart,//BottomStart,
                         modifier = Modifier.fillMaxHeight()
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
@@ -209,12 +209,12 @@ internal fun RecipeListScreen(
                             }
                         },
 
-                        actions ={
-                            IconButton( onClick = { }
-                            ) {
-                                Icon(Icons.Filled.Search, contentDescription = stringResource(id = R.string.search_icon_description))
-                            }
-                        },
+//                        actions ={
+//                            IconButton( onClick = { }
+//                            ) {
+//                                Icon(Icons.Filled.Search, contentDescription = stringResource(id = R.string.search_icon_description))
+//                            }
+//                        },
 
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Color.White,
