@@ -108,7 +108,9 @@ internal fun RecipeListScreen(
         drawerState = drawerState,
         gesturesEnabled = true,
         drawerContent = {
-            ModalDrawerSheet{
+            ModalDrawerSheet(
+                drawerContainerColor = Color.White
+            ){
                 Column(
                     modifier = Modifier
                         .padding(16.dp)

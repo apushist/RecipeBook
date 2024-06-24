@@ -75,6 +75,7 @@ fun CalculateIngredientsScreen(
                 },
 
                 colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
                     navigationIconContentColor = Color(0xFF4DB6AC),
                     actionIconContentColor = Color(0xFF4DB6AC)
                 )
@@ -127,13 +128,17 @@ fun IngredientsDropdownMenu():Double {
 
     Box {
         DropdownMenu(
+            modifier = Modifier.background(Color.White),
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
             offset = DpOffset(0.dp, 43.dp)
         ) {
             viewableIngredients.forEach { item ->
                 DropdownMenuItem(
-                    { Text(text = item.first)},
+                    
+                    { Text(
+
+                        text = item.first)},
                     onClick = {
                         selectedItem.value = item
                         selectedItemQuantity = item.second
