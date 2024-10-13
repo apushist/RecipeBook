@@ -1,7 +1,7 @@
 
 ![icon-playstore](https://github.com/user-attachments/assets/8fe0ea47-6dfa-4e18-ab9d-9e102085592a)
 # Android-приложение "Книга рецептов"
->The application has English localization. To see it please follow the link (добавить)
+>The application has English localization. To see it please follow [the link](https://github.com/apushist/RecipeBook/blob/main/README-en.md)
 
 Мобильное приложение для хранения и редактирования рецептов, а также перерасчёта количества ингредиентов блюд 
 
