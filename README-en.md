@@ -1,21 +1,29 @@
 
 ![icon-playstore](https://github.com/user-attachments/assets/8fe0ea47-6dfa-4e18-ab9d-9e102085592a)
-# Android-приложение "Книга рецептов"
->The application has English localization. To see it please follow the link (добавить)
+# Android-application "Recipe Book"
+>Чтобы вернуться к русской версии перейдите по [ссылке](https://github.com/apushist/RecipeBook/blob/main/README.md)
 
-Мобильное приложение для хранения и редактирования рецептов, а также перерасчёта количества ингредиентов блюд 
+A mobile app for storing and editing recipes and recalculating the quantity of ingredients of dishes 
 
 ## Скриншоты
-При первоначальном открытии приложения главный экран выглядит так:
-<img src="https://github.com/user-attachments/assets/391913b5-ef40-49b5-b41d-0d96f39cb60f" alt="Описание" style="width: 50%; height: auto;">
+When you first open the app, the home screen looks like this:
 
-Добавление новых рецептов:
-![Без названия91_20241005114129](https://github.com/user-attachments/assets/ade4b477-b3c6-49ac-a563-04b4e5edcc42)
-Меню удаления всех рецептов:
-![Без названия91](https://github.com/user-attachments/assets/cf184151-01e4-4891-8161-5e043f1ea403)
-Изменение сохраненного рецепта:
-![Без названия90_20241005121123 (1)](https://github.com/user-attachments/assets/6e40f89a-8736-43a1-bef4-9d6015b14d37)
+<img src="https://github.com/user-attachments/assets/4ac7a912-c621-4c8f-8be9-06faa0f543c1" alt="Описание" style="width: 50%; height: auto;">
 
-![Без названия90_20241005115421](https://github.com/user-attachments/assets/a3fa5d6a-013c-41db-89b9-5c24dfec9ab3)
-Функция перерасчета ингредиентов от количества какого-то одного:
-![Без названия91_20241005120342](https://github.com/user-attachments/assets/435b923c-4b45-4726-b4e1-14f2cbce79b4)
+Adding new recipes:
+
+![Без названия91_20241013200415](https://github.com/user-attachments/assets/18fc60bc-8247-4ad8-a3b1-b5362082f331)
+
+Menu for deleting all recipes:
+
+![Без названия90_20241013195600](https://github.com/user-attachments/assets/18c8c57c-7afa-4ac3-8a0e-4578ada2b0a2)
+
+Editing a saved recipe:
+
+![Без названия90_20241013195234](https://github.com/user-attachments/assets/539de297-a078-4bd7-bbf6-71a1eb4fbcb5)
+
+![Без названия90_20241013195812](https://github.com/user-attachments/assets/e12d18d2-bd9b-4680-8db5-e38be80174f4)
+
+The function of recalculating the ingredients from the quantity of some one:
+
+![Без названия91_20241013195049](https://github.com/user-attachments/assets/582c184b-8706-4107-9e4d-108edd4a41b7)
