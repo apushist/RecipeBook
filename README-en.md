@@ -5,7 +5,7 @@
 
 A mobile app for storing and editing recipes and recalculating the quantity of ingredients of dishes 
 
-## Скриншоты
+## Screenshots
 When you first open the app, the home screen looks like this:
 
 <img src="https://github.com/user-attachments/assets/4ac7a912-c621-4c8f-8be9-06faa0f543c1" alt="Описание" style="width: 50%; height: auto;">
